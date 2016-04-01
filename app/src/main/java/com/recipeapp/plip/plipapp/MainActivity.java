@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity
         addBTN = (Button) findViewById(R.id.add_item);
 
         // List Adapter
-//        ListAdapter ingredientAD = new ListAdapter(this, in) {
+//        IngredientListAdapter ingredientAD = new IngredientListAdapter(this, in) {
 //        }
 
         ingredient_list = (ListView) findViewById(R.id.itemList);
