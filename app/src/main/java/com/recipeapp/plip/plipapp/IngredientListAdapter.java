@@ -8,8 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import
-
 import java.util.ArrayList;
 
 /**
