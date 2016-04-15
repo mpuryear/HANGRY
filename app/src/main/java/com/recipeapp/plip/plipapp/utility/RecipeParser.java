@@ -1,17 +1,17 @@
 package com.recipeapp.plip.plipapp.utility;
 
 import com.google.gson.Gson;
-import com.recipeapp.plip.plipapp.model.SearchResultsModel;
+import com.recipeapp.plip.plipapp.model.ComplexSearchResultsModel;
 
 /**
- * A class which takes in a JSON stirng and returns a SearchResultsModel
+ * A class which takes in a JSON stirng and returns a ComplexSearchResultsModel
  */
 public class RecipeParser {
-    public static final SearchResultsModel parseRecipeFromJson(final String inputString) {
-        SearchResultsModel searchResultsModel;
+    public static final ComplexSearchResultsModel parseRecipeFromJson(final String inputString) {
+        ComplexSearchResultsModel complexSearchResultsModel;
         Gson gson = new Gson();
-        searchResultsModel = gson.fromJson(inputString, SearchResultsModel.class);
+        complexSearchResultsModel = gson.fromJson(inputString, ComplexSearchResultsModel.class);
 
-        return searchResultsModel;
+        return complexSearchResultsModel;
     }
 }

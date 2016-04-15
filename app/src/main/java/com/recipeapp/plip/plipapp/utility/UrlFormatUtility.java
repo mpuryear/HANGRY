@@ -4,6 +4,7 @@ package com.recipeapp.plip.plipapp.utility;
 import com.recipeapp.plip.plipapp.AppDefines;
 
 public class UrlFormatUtility {
+    /*
     private static final String RECIPE_ROUTE = "/recipes?";
 
     public static String formatRecipeSearchString(String searchString) {
@@ -17,4 +18,5 @@ public class UrlFormatUtility {
 
         return urlString;
     }
+    */
 }

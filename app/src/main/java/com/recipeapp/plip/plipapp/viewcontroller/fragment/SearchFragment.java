@@ -14,13 +14,11 @@ import android.widget.EditText;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import com.recipeapp.plip.plipapp.AppDefines;
+
 import com.recipeapp.plip.plipapp.R;
 import com.recipeapp.plip.plipapp.adapter.RecipeAdapter;
-import com.recipeapp.plip.plipapp.listener.IRecipeCallbackListener;
 import com.recipeapp.plip.plipapp.model.RecipeItemModel;
-import com.recipeapp.plip.plipapp.model.SearchResultsModel;
-import com.recipeapp.plip.plipapp.service.RecipeSearchTask;
+import com.recipeapp.plip.plipapp.model.ComplexSearchResultsModel;
 import com.recipeapp.plip.plipapp.service.api.ApiClient;
 
 /**
@@ -74,15 +72,12 @@ public class SearchFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 ApiClient.getInstance().getRecipeApiAdapter()
                         .getRecipeSearchResults(
-                                AppDefines.APPLICATION_ID,
-                                AppDefines.APPLICATION_KEY,
                                 searchText.getText().toString())
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<SearchResultsModel>() {
+                        .subscribe(new Observer<ComplexSearchResultsModel>() {
                             @Override
                             public void onCompleted() {
 
@@ -94,10 +89,10 @@ public class SearchFragment extends Fragment {
                             }
 
                             @Override
-                            public void onNext(SearchResultsModel searchResultsModel) {
+                            public void onNext(ComplexSearchResultsModel complexSearchResultsModel) {
 
                                 // On handling the http response, instantiate a new adapter with the results
-                                adapter = new RecipeAdapter(searchResultsModel.getSearchResults());
+                                adapter = new RecipeAdapter(complexSearchResultsModel.getSearchResults());
 
                                 adapter.setOnItemSelected(new RecipeAdapter.OnItemSelected() {
                                     @Override

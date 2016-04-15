@@ -1,15 +1,26 @@
 package com.recipeapp.plip.plipapp.service.adapter;
 
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Query;
 import rx.Observable;
-import com.recipeapp.plip.plipapp.model.SearchResultsModel;
+
+import com.recipeapp.plip.plipapp.model.ComplexSearchResultsModel;
+import com.recipeapp.plip.plipapp.model.QuickAnswerModel;
 
 public interface RecipeApiAdapter {
 
-    @GET("recipe")
-    Observable<SearchResultsModel> getRecipeSearchResults(
-    //        @Query("_app_id") String appId,
-            @Query("_app_key") String appKey,
-            @Query("q") String searchString);
+
+    @Headers("X-Mashape-Key : 9WLvQTpY6pmshsB2bkvHaMWU6MaJp1ROaugjsnPbkqB5D8i082")
+    @GET("recipes/searchComplex")
+    Observable<ComplexSearchResultsModel> getRecipeSearchResults(
+            @Query("query") String searchString);
+
+
+    @Headers("X-Mashape-Key : 9WLvQTpY6pmshsB2bkvHaMWU6MaJp1ROaugjsnPbkqB5D8i082")
+    @GET("recipes/quickAnswer")
+    Observable<QuickAnswerModel> getQuickAnswer(
+            @Query("q") String searchString
+    );
+
 }
