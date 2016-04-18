@@ -38,11 +38,11 @@ public class RecipeItemViewHolder extends RecyclerView.ViewHolder implements Vie
 
         // Use the Glide library (referenced in Gradle) to preload an image resource for the recipeThumbnail
         Glide.with(itemView.getContext())
-                .load(item.getSmallImageUrls().get(0))
+                .load(item.getImageUrls())
                 .into(recipeThumbnail);
 
         // Set the value of the recipeName
-        recipeName.setText(item.getRecipeName());
+        recipeName.setText(item.getTitle());
 
         // Adding click listeners on the image and text of the RecyclerView items to handle touch
         // events

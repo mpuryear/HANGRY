@@ -11,15 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-
 import com.recipeapp.plip.plipapp.R;
 import com.recipeapp.plip.plipapp.adapter.RecipeAdapter;
 import com.recipeapp.plip.plipapp.model.RecipeItemModel;
-import com.recipeapp.plip.plipapp.model.ComplexSearchResultsModel;
-import com.recipeapp.plip.plipapp.service.api.ApiClient;
 
 /**
  * A fragment containing all of the implementation details for recipe searches that were previously
@@ -68,10 +62,40 @@ public class SearchFragment extends Fragment {
         // A RecyclerView needs a layout manager assigned to instruct it on how to lay content out
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
 
+        // Overrides Enter
+//        searchText.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if (event.getAction() == KeyEvent.ACTION_DOWN)
+//                {
+//                    switch(keyCode)
+//                    {
+//                        case KeyEvent.KEYCODE_DPAD_CENTER:
+//                        case KeyEvent.KEYCODE_NUMPAD_ENTER:
+////                            System.out.print("numpad enter pressed");
+//                        case KeyEvent.KEYCODE_ENTER:
+////                            System.out.print("enter pressed");
+//                            Log.d("default: ", Integer.toString();
+//                            return true;
+//                        default:
+////                            System.out.print(Integer.toString(keyCode));
+//                            Log.d("default: ", Integer.toString(keyCode));
+//                            break;
+//                    }
+//                }
+//                return false;
+//            }
+//        });
+
+
+
+
         // A click listener is defined to handle the callback from the RecipeAsyncTask
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+/*
                 ApiClient.getInstance().getRecipeApiAdapter()
                         .getRecipeSearchResults(
                                 searchText.getText().toString())
@@ -109,6 +133,7 @@ public class SearchFragment extends Fragment {
                                 recipeRecyclerView.setAdapter(adapter);
                             }
                         });
+*/
             }
         });
 

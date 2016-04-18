@@ -8,24 +8,24 @@ import java.util.ArrayList;
  * the Serializable interface to all the class to be serialized into fragment args.
  */
 public class RecipeItemModel implements Serializable {
-    private String id;
-    private String recipeName;
-    private ArrayList<String> smallImageUrls;
-    private ArrayList<String> ingredients;;
+    private Integer id;
+    private String title;
+    private Integer readyInMinutes;
+    private ArrayList<String> imageUrls;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public String getRecipeName() {
-        return recipeName;
+    public String getTitle() {
+        return title;
     }
 
-    public ArrayList<String> getSmallImageUrls() {
-        return smallImageUrls;
+    public Integer getReadyInMinutes() {
+        return readyInMinutes;
     }
 
-    public ArrayList<String> getIngredients() { return ingredients; }
-
-
+    public ArrayList<String> getImageUrls() {
+        return imageUrls;
+    }
 }

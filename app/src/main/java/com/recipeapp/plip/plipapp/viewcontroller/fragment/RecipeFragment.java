@@ -66,15 +66,15 @@ public class RecipeFragment extends Fragment {
 
 
         // Use the Glide library (referenced in Gradle) to preload an image resource for the recipeDetailThumbnail
-        Glide.with(this).load(recipe.getSmallImageUrls().get(0))
+        Glide.with(this).load(recipe.getImageUrls())
                 .into(recipeDetailThumbnail);
 
         // Set the value of the recipeDetailName
-        recipeDetailName.setText(recipe.getRecipeName());
+        recipeDetailName.setText(recipe.getTitle());
 
         // An inline adapter is declared for the list view since it will only be handling a collection
         // of strings.
-        ingredients.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, recipe.getIngredients()));
+        ingredients.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, recipe.getReadyInMinutes())); // used to be getIngredients
 
         return view;
     }
