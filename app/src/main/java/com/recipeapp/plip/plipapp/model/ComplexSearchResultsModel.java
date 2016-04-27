@@ -10,10 +10,10 @@ import java.util.ArrayList;
  */
 public class ComplexSearchResultsModel {
 
-    @SerializedName("matches")
-    ArrayList<RecipeItemModel> searchResults;
+    @SerializedName("results")
+    ArrayList<ComplexRecipeItemModel> searchResults;
 
-    public ArrayList<RecipeItemModel> getSearchResults() {
+    public ArrayList<ComplexRecipeItemModel> getSearchResults() {
         return searchResults;
     }
 

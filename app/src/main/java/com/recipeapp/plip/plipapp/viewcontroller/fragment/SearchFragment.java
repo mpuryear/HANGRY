@@ -3,17 +3,29 @@ package com.recipeapp.plip.plipapp.viewcontroller.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.BaseInputConnection;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.recipeapp.plip.plipapp.R;
+import com.recipeapp.plip.plipapp.adapter.IngredientAdapter;
 import com.recipeapp.plip.plipapp.adapter.RecipeAdapter;
+import com.recipeapp.plip.plipapp.listener.IRecipeCallbackListener;
+import com.recipeapp.plip.plipapp.model.ComplexRecipeItemModel;
+import com.recipeapp.plip.plipapp.model.ComplexSearchResultsModel;
+import com.recipeapp.plip.plipapp.model.IngredientModel;
 import com.recipeapp.plip.plipapp.model.RecipeItemModel;
+import com.recipeapp.plip.plipapp.service.RecipeSearchTask;
+
+import java.util.ArrayList;
 
 /**
  * A fragment containing all of the implementation details for recipe searches that were previously
@@ -21,12 +33,21 @@ import com.recipeapp.plip.plipapp.model.RecipeItemModel;
  * without having to create a new Activity.
  */
 public class SearchFragment extends Fragment {
+    private static final String TAG = SearchFragment.class.getSimpleName();
     private EditText searchText;
+    private String ingredient;
+    private ArrayList<IngredientModel> ingredientList;
+    private IngredientModel newIngredient;
     private Button searchButton;
+    private TextView lastSearchedText;
     private RecyclerView recipeRecyclerView;
+    private RecyclerView ingredientRecyclerView;
     private RecipeAdapter adapter;
+    private IngredientAdapter ingredientAdapter;
     private LinearLayoutManager layoutManager;
     private OnFragmentEvent onFragmentEvent;
+
+
 
     public SearchFragment() {
         // Required empty public constructor
@@ -50,17 +71,26 @@ public class SearchFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         // Assigning layout file instances of these UI elements to their java counterparts
         searchText = (EditText)view.findViewById(R.id.searchText);
+        lastSearchedText = (TextView)view.findViewById(R.id.lastSearchedText);
         searchButton = (Button)view.findViewById(R.id.searchButton);
         recipeRecyclerView = (RecyclerView)view.findViewById(R.id.recipeRecyclerView);
+        ingredientRecyclerView = (RecyclerView)view.findViewById(R.id.ingredientRecyclerView);
 
         // A RecyclerView needs a layout manager assigned to instruct it on how to lay content out
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+       // ingredientLayoutManager = new GridLayoutManager(getActivity(), GridLayoutManager.HORIZONTAL, false);
+        //Assigning the horizontal layoutManager the search flags at the top
+        ingredientRecyclerView.setLayoutManager(
+                new GridLayoutManager(ingredientRecyclerView.getContext(), 1, GridLayoutManager.HORIZONTAL, false));
+
+
+        ingredientList = new ArrayList<>();
 
         // Overrides Enter
 //        searchText.setOnKeyListener(new View.OnKeyListener() {
@@ -94,6 +124,67 @@ public class SearchFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // Store our string and generate an IngredientModel out of it.
+                ingredient = searchText.getText().toString().trim();
+
+                // Empty our search field
+                searchText.setText("");
+                newIngredient = new IngredientModel();
+                newIngredient.setName(ingredient);
+
+
+                Boolean alreadyStoredInList = false;
+                // Store our ingredient model in our ArrayList of ingredients
+                for(int i = 0; i < ingredientList.size(); i++)
+                {
+
+                    Log.d(TAG, "Printing ingredientList @" + Integer.toString(i) + ingredientList.get(i).getName());
+                    if (ingredientList.get(i).getName().equals(ingredient))
+                        alreadyStoredInList = true;
+                }
+                if(!alreadyStoredInList)
+                    ingredientList.add(newIngredient);
+
+
+                ingredientAdapter = new IngredientAdapter(ingredientList);
+
+                // Assigning the search text flags an adapter.
+                ingredientRecyclerView.setAdapter(ingredientAdapter);
+
+                //Creating an inline concrete implementation of the listener handle callback on the main thread
+                IRecipeCallbackListener listener = new IRecipeCallbackListener() {
+                    @Override
+                    public void onSearchCallback(ComplexSearchResultsModel complexSearchResultsModel) {
+
+                        // On handling the http response, instantiate a new adapter with the results
+                        if(complexSearchResultsModel != null) {
+                            adapter = new RecipeAdapter(complexSearchResultsModel.getSearchResults());
+
+                            adapter.setOnItemSelected(new RecipeAdapter.OnItemSelected() {
+                                @Override
+                                public void onSelected(ComplexRecipeItemModel item) {
+                                    if (onFragmentEvent != null)
+                                        onFragmentEvent.onEvent(item);
+                                }
+                            });
+
+                            // Assigning the layoutManager to the recyclerView
+                            recipeRecyclerView.setLayoutManager(layoutManager);
+
+
+
+                            // Assigning the adapter to the RecyclerView. If this isnt done the view will not populate
+                            recipeRecyclerView.setAdapter(adapter);
+
+
+                        }else Log.d(TAG, "complexSearchResulstsModel was null");
+                    }
+                };
+
+
+
+
 
 /*
                 ApiClient.getInstance().getRecipeApiAdapter()
@@ -131,9 +222,24 @@ public class SearchFragment extends Fragment {
                                 recipeRecyclerView.setLayoutManager(layoutManager);
                                 // Assigning the Adapter to the RecyclerView. If this isn't done, the view will not populate
                                 recipeRecyclerView.setAdapter(adapter);
-                            }
-                        });
 */
+                // Instantiate a new AsyncTask to make an http call on background thread.
+                // RecipeSearch task now has a constructor which requires an instance of IRecipeCaallbackListener
+                RecipeSearchTask recipeSearchTask = new RecipeSearchTask(listener);
+
+
+                String concatenatedSearchParam = "";
+
+                // Concatinate all of our ingredients and then pass our new string to the recipeSearchTask
+                for(int i = 0; i < ingredientList.size(); i++)
+                    concatenatedSearchParam += ingredientList.get(i).getName() + " ";
+
+                // Set our textview for last searched text
+                lastSearchedText.setText(concatenatedSearchParam);
+
+                // Execute the AsyncTask
+                recipeSearchTask.execute(concatenatedSearchParam);
+
             }
         });
 
@@ -157,7 +263,7 @@ public class SearchFragment extends Fragment {
     }
 
     public interface OnFragmentEvent {
-        void onEvent(RecipeItemModel item);
+        void onEvent(ComplexRecipeItemModel item);
     }
 
 }

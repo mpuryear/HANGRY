@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import com.recipeapp.plip.plipapp.R;
+import com.recipeapp.plip.plipapp.model.ComplexRecipeItemModel;
 import com.recipeapp.plip.plipapp.model.RecipeItemModel;
 
 /**
@@ -21,7 +22,7 @@ public class RecipeItemViewHolder extends RecyclerView.ViewHolder implements Vie
     // Create local instances of the layout elements in item_recipe
     private ImageView recipeThumbnail;
     private TextView recipeName;
-    private RecipeItemModel item;
+    private ComplexRecipeItemModel item;
     private OnRecipeItemClicked onRecipeItemClicked;
 
 
@@ -30,7 +31,7 @@ public class RecipeItemViewHolder extends RecyclerView.ViewHolder implements Vie
     }
 
     // A method to bing a RecipeItemModel to the item_recipe layout
-    public final void bind(final RecipeItemModel item) {
+    public final void bind(final ComplexRecipeItemModel item) {
         // assign layout instances to local versions
         this.item = item;
         recipeThumbnail = (ImageView)itemView.findViewById(R.id.recipeThumbnail);
@@ -38,7 +39,7 @@ public class RecipeItemViewHolder extends RecyclerView.ViewHolder implements Vie
 
         // Use the Glide library (referenced in Gradle) to preload an image resource for the recipeThumbnail
         Glide.with(itemView.getContext())
-                .load(item.getImageUrls())
+                .load(item.getImage())
                 .into(recipeThumbnail);
 
         // Set the value of the recipeName
@@ -71,7 +72,7 @@ public class RecipeItemViewHolder extends RecyclerView.ViewHolder implements Vie
     // classes that instantiate a new instance of this ViewHolder to subscribe to this interface
     // and listen for events.
     public interface OnRecipeItemClicked {
-        void onClick(RecipeItemModel item);
+        void onClick(ComplexRecipeItemModel item);
     }
 
 }

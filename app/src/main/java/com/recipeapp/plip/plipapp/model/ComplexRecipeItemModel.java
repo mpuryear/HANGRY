@@ -9,21 +9,24 @@ import java.util.ArrayList;
  */
 public class ComplexRecipeItemModel implements Serializable {
     private String id;
+   /*
     private String usedIngredientCount;
     private String missedIngredientCount;
     private String likes;
+    */
     private String title;
     private String image;
     private String imageType;
+    /*
     private String calories;
     private String protein;
     private String fat;
     private String carbs;
-
+*/
     public String getId() {
         return id;
     }
-
+/*
     public String getUsedIngredientCount() {
         return usedIngredientCount;
     }
@@ -35,7 +38,7 @@ public class ComplexRecipeItemModel implements Serializable {
     public String getLikes() {
         return likes;
     }
-
+*/
     public String getTitle() {
         return title;
     }
@@ -48,19 +51,19 @@ public class ComplexRecipeItemModel implements Serializable {
         return imageType;
     }
 
-    public String getCalories() {
-        return calories;
-    }
-
-    public String getProtein() {
-        return protein;
-    }
-
-    public String getFat() {
-        return fat;
-    }
-
-    public String getCarbs() {
-        return carbs;
-    }
+//    public String getCalories() {
+//        return calories;
+//    }
+//
+//    public String getProtein() {
+//        return protein;
+//    }
+//
+//    public String getFat() {
+//        return fat;
+//    }
+//
+//    public String getCarbs() {
+//        return carbs;
+//    }
 }

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import com.recipeapp.plip.plipapp.R;
+import com.recipeapp.plip.plipapp.model.ComplexRecipeItemModel;
 import com.recipeapp.plip.plipapp.model.RecipeItemModel;
 
 
@@ -24,19 +25,19 @@ import com.recipeapp.plip.plipapp.model.RecipeItemModel;
  */
 public class RecipeFragment extends Fragment {
 
-    private RecipeItemModel recipe;
+    private ComplexRecipeItemModel recipe;
     private static final String RECIPE = "recipe";
 
     private ImageView recipeDetailThumbnail;
     private TextView recipeDetailName;
-    private ListView ingredients;
+    private TextView ingredientsUsedCount;
 
     public RecipeFragment() {
         // Required empty public constructor
     }
 
     // A RecipeItemModel is passed in during instantiation for addition to the fragment's args
-    public static RecipeFragment newInstance(RecipeItemModel recipe) {
+    public static RecipeFragment newInstance(ComplexRecipeItemModel recipe) {
         RecipeFragment fragment = new RecipeFragment();
         Bundle args = new Bundle();
         args.putSerializable(RECIPE, recipe);
@@ -49,7 +50,7 @@ public class RecipeFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            recipe = (RecipeItemModel)getArguments().getSerializable(RECIPE);
+            recipe = (ComplexRecipeItemModel)getArguments().getSerializable(RECIPE);
         }
     }
 
@@ -62,11 +63,11 @@ public class RecipeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recipe, container, false);
         recipeDetailThumbnail = (ImageView)view.findViewById(R.id.recipeDetailThumbnail);
         recipeDetailName = (TextView)view.findViewById(R.id.recipeDetailName);
-        ingredients = (ListView)view.findViewById(R.id.ingredients);
+        ingredientsUsedCount = (TextView)view.findViewById(R.id.id);
 
 
         // Use the Glide library (referenced in Gradle) to preload an image resource for the recipeDetailThumbnail
-        Glide.with(this).load(recipe.getImageUrls())
+        Glide.with(this).load(recipe.getImage())
                 .into(recipeDetailThumbnail);
 
         // Set the value of the recipeDetailName
@@ -74,7 +75,7 @@ public class RecipeFragment extends Fragment {
 
         // An inline adapter is declared for the list view since it will only be handling a collection
         // of strings.
-        ingredients.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, recipe.getReadyInMinutes())); // used to be getIngredients
+        ingredientsUsedCount.setText(recipe.getId().toString()); // used to be getIngredients
 
         return view;
     }

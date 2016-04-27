@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.recipeapp.plip.plipapp.R;
+import com.recipeapp.plip.plipapp.model.ComplexRecipeItemModel;
 import com.recipeapp.plip.plipapp.model.RecipeItemModel;
 import com.recipeapp.plip.plipapp.viewcontroller.fragment.RecipeFragment;
 import com.recipeapp.plip.plipapp.viewcontroller.fragment.ResultsFragment;
@@ -41,7 +42,7 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
         searchFragment.setOnFragmentEvent(new SearchFragment.OnFragmentEvent() {
             // The override for the listener interface method
             @Override
-            public void onEvent(RecipeItemModel recipe) {
+            public void onEvent(ComplexRecipeItemModel recipe) {
                 // Creation of a new, different fragment instance to replace the instance currently in view
                 recipeFragment = RecipeFragment.newInstance(recipe);
 
