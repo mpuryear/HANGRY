@@ -3,13 +3,8 @@ package com.recipeapp.plip.plipapp.adapter.viewholder;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.recipeapp.plip.plipapp.R;
-import com.recipeapp.plip.plipapp.model.ComplexRecipeItemModel;
-import com.recipeapp.plip.plipapp.model.FindByIngredientsModel;
 import com.recipeapp.plip.plipapp.model.IngredientModel;
 
 

@@ -9,11 +9,6 @@ import java.util.ArrayList;
  */
 public class ComplexRecipeItemModel implements Serializable {
     private String id;
-   /*
-    private String usedIngredientCount;
-    private String missedIngredientCount;
-    private String likes;
-    */
     private String title;
     private String image;
     private String imageType;
@@ -22,7 +17,11 @@ public class ComplexRecipeItemModel implements Serializable {
     private String protein;
     private String fat;
     private String carbs;
-*/
+    private String usedIngredientCount;
+    private String missedIngredientCount;
+    private String likes;
+
+    */
     public String getId() {
         return id;
     }
@@ -39,6 +38,14 @@ public class ComplexRecipeItemModel implements Serializable {
         return likes;
     }
 */
+    public void setId(String id) { this.id = id; }
+
+    public void setTitle(String title) { this.title = title;}
+
+    public void setImage(String Image) { this.image = image;}
+
+    public void setImageType(String imageType) {this.imageType = imageType; }
+
     public String getTitle() {
         return title;
     }
