@@ -10,4 +10,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+
+    <!-- Stephanie's Strings-->
+    <string name="ingr_box">What ingredients do you have?</string>
+    <string name="recipe">What are you cooking?</string>
 </resources>

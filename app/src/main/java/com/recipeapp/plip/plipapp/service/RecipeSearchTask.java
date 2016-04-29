@@ -43,7 +43,7 @@ public class RecipeSearchTask extends AsyncTask<String,String,ComplexSearchResul
     }
 
     // An overridden virtual method which handles the value returned from the background thread to the
-    // main thread
+    // activity_testdatabase thread
     @Override
     protected void onPostExecute(ComplexSearchResultsModel complexSearchResultsModel) {
         super.onPostExecute(complexSearchResultsModel);

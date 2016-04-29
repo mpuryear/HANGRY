@@ -14,7 +14,7 @@ public class TestDatabaseActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.activity_testdatabase);
 
         datasource = new CommentsDataSource(this);
         datasource.open();
@@ -29,7 +29,7 @@ public class TestDatabaseActivity extends ListActivity {
     }
 
     // Will be called via the onClick attribute
-    // of the buttons in main.xml
+    // of the buttons in activity_testdatabase.xml_testdatabase.xml
     public void onClick(View view) {
         @SuppressWarnings("unchecked")
         ArrayAdapter<Comment> adapter = (ArrayAdapter<Comment>) getListAdapter();
