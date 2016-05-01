@@ -1,16 +1,25 @@
 package com.recipeapp.plip.plipapp.viewcontroller.activity;
 
+import android.content.Intent;
+import android.gesture.GestureOverlayView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.widget.Toast;
 
 import com.recipeapp.plip.plipapp.R;
+import com.recipeapp.plip.plipapp.RecipeTypes;
 import com.recipeapp.plip.plipapp.model.ComplexRecipeItemModel;
 import com.recipeapp.plip.plipapp.model.RecipeItemModel;
 import com.recipeapp.plip.plipapp.viewcontroller.fragment.RecipeFragment;
@@ -20,12 +29,17 @@ import com.recipeapp.plip.plipapp.viewcontroller.fragment.SearchFragment;
 /**
  * An Activity controlling the Search feature
  */
-public class SearchActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class SearchActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GestureDetector.OnGestureListener {
 
     // Declaration of the fragments that we will be injecting into our layout
     private SearchFragment searchFragment;
     private RecipeFragment recipeFragment;
     private ResultsFragment resultsFragment;
+
+    // Gesture
+    GestureDetector detector;
+
+    private final String TAG = "TKT";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,9 +47,14 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
         // Adding toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Log.d(TAG, "onCreate");
 
         // Creation of a new fragment instance
         searchFragment = SearchFragment.newInstance();
+
+
+        // Gesture
+        detector = new GestureDetector(this);
 
         // A listener that handles an event from the SearchFragment. In this case, it is handling the
         // selection of an item from the search results RecyclerView
@@ -75,9 +94,6 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
-
     }
 
     @Override
@@ -92,6 +108,8 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            overridePendingTransition(R.anim.act_two_back, R.anim.act_two_go);
+            Log.d(TAG, "onBackPressed");
         }
     }
 
@@ -113,7 +131,11 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
         if (id == R.id.action_settings) {
             return true;
         }
-
+        else if (id == android.R.id.home) {
+            finish();
+            overridePendingTransition(R.anim.act_two_back, R.anim.act_two_go);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -123,9 +145,11 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_inventory) {
+            // Recipe Types
+
+        } else if (id == R.id.nav_history) {
+
         } else if (id == R.id.nav_results)
         {
             resultsFragment = ResultsFragment.newInstance();
@@ -146,4 +170,32 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public void onShouldStartActivity() {
+        // Creation of intent to start Activity2
+        Intent intent = new Intent(this, RecipeTypes.class);
+        startActivity(intent);
+
+        // We override the transition
+        overridePendingTransition(R.anim.act_one_go, R.anim.act_one_back);
+        Log.d(TAG, "onShouldStartActivity");
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        return detector.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean onDown (MotionEvent e) {
+            Toast.makeText(getApplicationContext(), "onDown Gesture", Toast.LENGTH_LONG).show();
+            return false;
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocity){
+    // NOT DONE
+    }
+
+    //http://mrbool.com/how-to-work-with-swipe-gestures-in-android/28088
 }

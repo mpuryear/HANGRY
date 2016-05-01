@@ -29,6 +29,7 @@ import com.recipeapp.plip.plipapp.model.IngredientModel;
 import com.recipeapp.plip.plipapp.model.RecipeItemModel;
 import com.recipeapp.plip.plipapp.service.RecipeSearchTask;
 import com.recipeapp.plip.plipapp.service.api.ApiClient;
+import com.recipeapp.plip.plipapp.viewcontroller.activity.SearchActivity;
 
 import java.util.ArrayList;
 
@@ -41,7 +42,7 @@ import rx.schedulers.Schedulers;
  * contained in the SearchActivity.  This allows us to change out the current function of SearchActivity
  * without having to create a new Activity.
  */
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment{
     private static final String TAG = SearchFragment.class.getSimpleName();
     private EditText searchText;
     private String ingredient;
@@ -112,6 +113,10 @@ public class SearchFragment extends Fragment {
 
 
                 closeKeyboard(getActivity(), searchText.getWindowToken());
+//                Log.d(TAG, "About to call onShouldStart in setOnFragmentEvent");
+//                // Calling onShouldStartActivity for transition
+//                ((SearchActivity)getActivity()).onShouldStartActivity();
+//                Log.d(TAG, "After calling onShouldStartActivity");
 
                 // Store our string and generate an IngredientModel out of it.
                 ingredient = searchText.getText().toString().trim();
