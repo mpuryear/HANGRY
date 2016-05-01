@@ -32,7 +32,23 @@ public class CommentsDataSource {
         dbHelper.close();
     }
 
-    public Comment createComment(String comment) {
+    public Comment createComment(int id, String comment) {
+        ContentValues values = new ContentValues();
+        values.put(Favorites_Database.COLUMN_COMMENT, comment);
+        values.put(Favorites_Database.COLUMN_ID, id);
+        long insertId = database.insert(Favorites_Database.TABLE_NAME, null,
+                values);
+        Cursor cursor = database.query(Favorites_Database.TABLE_NAME,
+                allColumns, Favorites_Database.COLUMN_ID + " = " + insertId, null,
+                null, null, null);
+        cursor.moveToFirst();
+        Comment newComment = cursorToComment(cursor);
+        cursor.close();
+        return newComment;
+    }
+
+    // Original without ID
+    /*public Comment createComment(String comment) {
         ContentValues values = new ContentValues();
         values.put(Favorites_Database.COLUMN_COMMENT, comment);
         long insertId = database.insert(Favorites_Database.TABLE_NAME, null,
@@ -44,7 +60,7 @@ public class CommentsDataSource {
         Comment newComment = cursorToComment(cursor);
         cursor.close();
         return newComment;
-    }
+    }*/
 
     public void deleteComment(Comment comment) {
         long id = comment.getId();
