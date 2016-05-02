@@ -85,7 +85,7 @@ public class SearchFragment extends Fragment{
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
+//        Log.d(TAG, "onCreateView");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         // Assigning layout file instances of these UI elements to their java counterparts
@@ -149,7 +149,7 @@ public class SearchFragment extends Fragment{
 
                 String concatenatedSearchParam = "";
 
-                // Concatenate all of our ingredients and then pass our new string to the recipeSearchTask
+//                // Concatenate all of our ingredients and then pass our new string to the recipeSearchTask
                 for(int i = 0; i < ingredientList.size(); i++)
                     concatenatedSearchParam += ingredientList.get(i).getName() + " ";
 

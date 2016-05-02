@@ -1,11 +1,13 @@
 package com.recipeapp.plip.plipapp.viewcontroller.activity;
 
 import android.content.Intent;
-import android.gesture.GestureOverlayView;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GestureDetectorCompat;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MotionEventCompat;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,55 +17,60 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.recipeapp.plip.plipapp.R;
+import com.recipeapp.plip.plipapp.RecipeGrid;
 import com.recipeapp.plip.plipapp.RecipeTypes;
 import com.recipeapp.plip.plipapp.model.ComplexRecipeItemModel;
-import com.recipeapp.plip.plipapp.model.RecipeItemModel;
+import com.recipeapp.plip.plipapp.viewcontroller.Swiping.TypesFragment;
 import com.recipeapp.plip.plipapp.viewcontroller.fragment.RecipeFragment;
 import com.recipeapp.plip.plipapp.viewcontroller.fragment.ResultsFragment;
 import com.recipeapp.plip.plipapp.viewcontroller.fragment.SearchFragment;
 
+import java.util.List;
+import java.util.Vector;
+
 /**
  * An Activity controlling the Search feature
  */
-public class SearchActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GestureDetector.OnGestureListener {
+public class SearchActivity extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     // Declaration of the fragments that we will be injecting into our layout
     private SearchFragment searchFragment;
     private RecipeFragment recipeFragment;
     private ResultsFragment resultsFragment;
+//    private TypesFragment typesFragment;
 
-    // Gesture
-    GestureDetector detector;
+    private PagerAdapter mPagerAdapter;
 
     private final String TAG = "TKT";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         // Adding toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         Log.d(TAG, "onCreate");
 
         // Creation of a new fragment instance
         searchFragment = SearchFragment.newInstance();
+        // Allows swiping left and right with typesFragment and SearchFragment
+        this.initializePaging();
 
 
-        // Gesture
-        detector = new GestureDetector(this);
 
-        // A listener that handles an event from the SearchFragment. In this case, it is handling the
-        // selection of an item from the search results RecyclerView
+//        // A listener that handles an event from the SearchFragment. In this case, it is handling the
+//        // selection of an item from the search results RecyclerView
         searchFragment.setOnFragmentEvent(new SearchFragment.OnFragmentEvent() {
             // The override for the listener interface method
             @Override
             public void onEvent(ComplexRecipeItemModel recipe) {
                 // Creation of a new, different fragment instance to replace the instance currently in view
                 recipeFragment = RecipeFragment.newInstance(recipe);
+                Log.d(TAG, "onOnFragmentEvent");
 
                 // The FragmentManager is used to manage all of our fragment transactions, including
                 // the injection into the view, the reordering of the current fragment in the view
@@ -74,18 +81,19 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, recipeFragment)
                         .addToBackStack(RecipeFragment.class.getSimpleName())
-                        .commit();
+                       .commit();
             }
         });
 
-        // The FragmentManager is used to inject the SearchFragment into the SearchActivity view.
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, searchFragment)
-                .addToBackStack(SearchFragment.class.getSimpleName())
-                .commit();
+        // The FragmentManager is used to inject the SearchFragment into the SearchActivity view. -- THIS IS WHAT MAKES IT APPEAR TWICE
+//        getSupportFragmentManager().beginTransaction()
+//                .add(R.id.container, searchFragment)
+//                .addToBackStack(SearchFragment.class.getSimpleName())
+//                .commit();
 
         // Testing Nav Bar:
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 //        drawer.setDrawerListener(toggle);
@@ -93,8 +101,23 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        // Navigation button for results
+//        onNavigationItemSelected();
+
 
     }
+
+    // Start of ViewPagerFragmentActivity Code
+    private void initializePaging() {
+        List<Fragment> fragments = new Vector<Fragment>();
+        fragments.add(Fragment.instantiate(this, SearchFragment.class.getName()));
+        fragments.add(Fragment.instantiate(this, TypesFragment.class.getName()));
+        this.mPagerAdapter  = new com.recipeapp.plip.plipapp.viewcontroller.Swiping.PagerAdapter(super.getSupportFragmentManager(), fragments);
+
+        ViewPager pager = (ViewPager)super.findViewById(R.id.viewpager);
+        pager.setAdapter(this.mPagerAdapter);
+    }
+    // End of ViewPageFragmentActivity Code
 
     @Override
     protected void onDestroy() {
@@ -106,10 +129,6 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-            overridePendingTransition(R.anim.act_two_back, R.anim.act_two_go);
-            Log.d(TAG, "onBackPressed");
         }
     }
 
@@ -131,17 +150,14 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
         if (id == R.id.action_settings) {
             return true;
         }
-        else if (id == android.R.id.home) {
-            finish();
-            overridePendingTransition(R.anim.act_two_back, R.anim.act_two_go);
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        Toast.makeText(getBaseContext(), "Selected a navigation item", Toast.LENGTH_LONG).show();
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -152,11 +168,14 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
 
         } else if (id == R.id.nav_results)
         {
-            resultsFragment = ResultsFragment.newInstance();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, resultsFragment)
-                    .addToBackStack(ResultsFragment.class.getSimpleName())
-                    .commit();
+            Log.d(TAG, "GOT IN HERE - trying to go to the results page");
+            Intent intent = new Intent(this, RecipeGrid.class);
+            startActivity(intent);
+//            resultsFragment = ResultsFragment.newInstance();
+//            getSupportFragmentManager().beginTransaction()
+//                    .add(R.id.container, resultsFragment)
+//                    .addToBackStack(ResultsFragment.class.getSimpleName())
+//                    .commit();
         }
 //        } else if (id == R.id.nav_manage) {
 //
@@ -170,32 +189,4 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    public void onShouldStartActivity() {
-        // Creation of intent to start Activity2
-        Intent intent = new Intent(this, RecipeTypes.class);
-        startActivity(intent);
-
-        // We override the transition
-        overridePendingTransition(R.anim.act_one_go, R.anim.act_one_back);
-        Log.d(TAG, "onShouldStartActivity");
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event){
-        return detector.onTouchEvent(event);
-    }
-
-    @Override
-    public boolean onDown (MotionEvent e) {
-            Toast.makeText(getApplicationContext(), "onDown Gesture", Toast.LENGTH_LONG).show();
-            return false;
-    }
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocity){
-    // NOT DONE
-    }
-
-    //http://mrbool.com/how-to-work-with-swipe-gestures-in-android/28088
 }
