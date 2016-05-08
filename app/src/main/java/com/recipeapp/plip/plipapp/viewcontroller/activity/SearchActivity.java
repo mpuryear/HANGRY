@@ -9,6 +9,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.recipeapp.plip.plipapp.R;
@@ -34,13 +36,15 @@ import java.util.Vector;
 /**
  * An Activity controlling the Search feature
  */
-public class SearchActivity extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class SearchActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     // Declaration of the fragments that we will be injecting into our layout
     private SearchFragment searchFragment;
     private RecipeFragment recipeFragment;
     private ResultsFragment resultsFragment;
-//    private TypesFragment typesFragment;
+    private DrawerLayout menuDrawer;
+    private ActionBarDrawerToggle toggle;
+//    private TypesFragment typesFragment;r
 
     private PagerAdapter mPagerAdapter;
 
@@ -52,18 +56,19 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         // Adding toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        Log.d(TAG, "onCreate");
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        Log.d(TAG, "onCreate");
+
+
+//        ((ActionBarActivity)getApplicationContext()).setSupportActionBar(toolbar);
 
         // Creation of a new fragment instance
         searchFragment = SearchFragment.newInstance();
-        // Allows swiping left and right with typesFragment and SearchFragment
-        this.initializePaging();
+        menuDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
 
 
-
-//        // A listener that handles an event from the SearchFragment. In this case, it is handling the
-//        // selection of an item from the search results RecyclerView
+        // A listener that handles an event from the SearchFragment. In this case, it is handling the
+        // selection of an item from the search results RecyclerView
         searchFragment.setOnFragmentEvent(new SearchFragment.OnFragmentEvent() {
             // The override for the listener interface method
             @Override
@@ -84,27 +89,37 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
                        .commit();
             }
         });
-
-        // The FragmentManager is used to inject the SearchFragment into the SearchActivity view. -- THIS IS WHAT MAKES IT APPEAR TWICE
-//        getSupportFragmentManager().beginTransaction()
-//                .add(R.id.container, searchFragment)
-//                .addToBackStack(SearchFragment.class.getSimpleName())
-//                .commit();
-
         // Testing Nav Bar:
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//        drawer.setDrawerListener(toggle);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toggle = new ActionBarDrawerToggle(
+                this, menuDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+
+            public void onDrawerClosed(View view) {
+                    super.onDrawerClosed(view);
+                    invalidateOptionsMenu();
+
+                }
+
+            public void onDrawerOpened(View view) {
+                super.onDrawerOpened(view);
+                invalidateOptionsMenu();
+            }
+
+
+        };
         toggle.syncState();
+        menuDrawer.setDrawerListener(toggle);
+
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         // Navigation button for results
 //        onNavigationItemSelected();
 
-
+    // Allows swiping left and right with typesFragment and SearchFragment
+        this.initializePaging();
     }
 
     // Start of ViewPagerFragmentActivity Code
@@ -126,10 +141,7 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        }
+
     }
 
     @Override
@@ -163,14 +175,14 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
 
         if (id == R.id.nav_inventory) {
             // Recipe Types
-
+            Log.d(TAG, "inventory was clicked");
         } else if (id == R.id.nav_history) {
-
+            Log.d(TAG, "History was clicked");
         } else if (id == R.id.nav_results)
         {
             Log.d(TAG, "GOT IN HERE - trying to go to the results page");
-            Intent intent = new Intent(this, RecipeGrid.class);
-            startActivity(intent);
+//            Intent intent = new Intent(this, RecipeGrid.class);
+//            startActivity(intent);
 //            resultsFragment = ResultsFragment.newInstance();
 //            getSupportFragmentManager().beginTransaction()
 //                    .add(R.id.container, resultsFragment)
@@ -185,8 +197,7 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
 //
 //        }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        menuDrawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }

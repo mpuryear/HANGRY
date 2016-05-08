@@ -13,10 +13,9 @@ import android.widget.TextView;
 public class RecipeGrid extends AppCompatActivity {
 
     private final String TAG = "TKT";
-    //int counter;
-    Button box1;
-    ImageView box2;
-    TextView Q;
+    private Button box1;
+    private ImageView box2;
+    private TextView Q;
 
     //RelativeLayout background;
 

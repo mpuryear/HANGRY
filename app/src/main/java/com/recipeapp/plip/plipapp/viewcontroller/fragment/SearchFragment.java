@@ -58,6 +58,7 @@ public class SearchFragment extends Fragment{
     private OnFragmentEvent onFragmentEvent;
     private ComplexRecipeItemModel testModel;
     private ArrayList<ComplexRecipeItemModel> testList;
+//    public static ArrayList<IngredientModel> publicIngredientList;
 
 
     public SearchFragment() {
@@ -99,8 +100,7 @@ public class SearchFragment extends Fragment{
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
        // ingredientLayoutManager = new GridLayoutManager(getActivity(), GridLayoutManager.HORIZONTAL, false);
         //Assigning the horizontal layoutManager the search flags at the top
-        ingredientRecyclerView.setLayoutManager(
-                new GridLayoutManager(ingredientRecyclerView.getContext(), 1, GridLayoutManager.HORIZONTAL, false));
+        ingredientRecyclerView.setLayoutManager(new GridLayoutManager(ingredientRecyclerView.getContext(), 1, GridLayoutManager.HORIZONTAL, false));
 
 
         ingredientList = new ArrayList<>();
@@ -113,10 +113,6 @@ public class SearchFragment extends Fragment{
 
 
                 closeKeyboard(getActivity(), searchText.getWindowToken());
-//                Log.d(TAG, "About to call onShouldStart in setOnFragmentEvent");
-//                // Calling onShouldStartActivity for transition
-//                ((SearchActivity)getActivity()).onShouldStartActivity();
-//                Log.d(TAG, "After calling onShouldStartActivity");
 
                 // Store our string and generate an IngredientModel out of it.
                 ingredient = searchText.getText().toString().trim();
@@ -136,9 +132,10 @@ public class SearchFragment extends Fragment{
                     if (ingredientList.get(i).getName().equals(ingredient))
                         alreadyStoredInList = true;
                 }
-                if(!alreadyStoredInList && !ingredient.equals(""))
+                if(!alreadyStoredInList && !ingredient.equals("")) {
                     ingredientList.add(newIngredient);
-
+//                    publicIngredientList.add(newIngredient);
+                }
 
                 ingredientAdapter = new IngredientAdapter(ingredientList);
 
@@ -190,7 +187,7 @@ public class SearchFragment extends Fragment{
                                 });
 
                                 // Assigning the LayoutManager to the RecyclerView
-                                recipeRecyclerView.setLayoutManager(layoutManager);
+                                recipeRecyclerView.setLayoutManager(new GridLayoutManager(ingredientRecyclerView.getContext(), 2, GridLayoutManager.VERTICAL, false));
                                 // Assigning the Adapter to the RecyclerView. If this isn't done, the view will not populate
                                 recipeRecyclerView.setAdapter(adapter);
 

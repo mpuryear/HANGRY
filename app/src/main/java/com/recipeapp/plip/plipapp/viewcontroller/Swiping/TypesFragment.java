@@ -21,6 +21,9 @@ public class TypesFragment extends Fragment {
 
     // Search Button
     private Button searchButton;
+    private Button BreakfastBTN;
+    private Button LunchBTN;
+    private Button DinnerBTN;
 
     public TypesFragment() {
         // Required empty public constructor
