@@ -4,12 +4,19 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
+import android.view.Menu;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.BaseInputConnection;
@@ -32,6 +39,7 @@ import com.recipeapp.plip.plipapp.service.RecipeSearchTask;
 import com.recipeapp.plip.plipapp.service.api.ApiClient;
 import com.recipeapp.plip.plipapp.viewcontroller.activity.SearchActivity;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import rx.Observer;
@@ -47,9 +55,14 @@ public class SearchFragment extends Fragment{
     private static final String TAG = SearchFragment.class.getSimpleName();
     private EditText searchText;
     private String ingredient;
+    private String allergies;
     private ArrayList<IngredientModel> ingredientList;
     private IngredientModel newIngredient;
     private Button searchButton;
+    private Button addItemButton;
+    private Button allergiesButton;
+    private Button cuisineButton;
+    private Button mealsButton;
     private TextView lastSearchedText;
     public RecyclerView recipeRecyclerView;
     private RecyclerView ingredientRecyclerView;
@@ -57,10 +70,11 @@ public class SearchFragment extends Fragment{
     private IngredientAdapter ingredientAdapter;
     private GridLayoutManager layoutManager;
     private OnFragmentEvent onFragmentEvent;
-    private ComplexRecipeItemModel testModel;
-    private ArrayList<ComplexRecipeItemModel> testList;
+    private IngredientAdapter.OnItemSelected onItemSelected;
     private Integer scrollDownCounter;
-//    public static ArrayList<IngredientModel> publicIngredientList;
+
+    // All of our allergies for our popup button and api call
+    private  boolean [] allergiesBooleans;
 
 
     public SearchFragment() {
@@ -88,6 +102,13 @@ public class SearchFragment extends Fragment{
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        allergies = "";
+
+        // set all of our allergies to false.
+        allergiesBooleans = new boolean[12];
+        for(int i =0; i < Array.getLength(allergiesBooleans); i++)
+            allergiesBooleans[i] = false;
+
 //        Log.d(TAG, "onCreateView");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
@@ -95,19 +116,25 @@ public class SearchFragment extends Fragment{
         searchText = (EditText)view.findViewById(R.id.searchText);
         lastSearchedText = (TextView)view.findViewById(R.id.lastSearchedText);
         searchButton = (Button)view.findViewById(R.id.searchButton);
-        recipeRecyclerView = (RecyclerView)view.findViewById(R.id.recipeRecyclerView);
+        addItemButton = (Button)view.findViewById(R.id.addItemButton);
+        allergiesButton = (Button)view.findViewById(R.id.allergiesButton);
+        cuisineButton = (Button)view.findViewById(R.id.cuisineButton);
+        mealsButton = (Button)view.findViewById(R.id.mealButton);
+
+
+       // recipeRecyclerView = (RecyclerView)view.findViewById(R.id.recipeRecyclerView);
         ingredientRecyclerView = (RecyclerView)view.findViewById(R.id.ingredientRecyclerView);
 
         scrollDownCounter = 0;
 
         // A RecyclerView needs a layout manager assigned to instruct it on how to lay content out
-        layoutManager = new GridLayoutManager(recipeRecyclerView.getContext(), 2, GridLayoutManager.VERTICAL, false);
-       // ingredientLayoutManager = new GridLayoutManager(getActivity(), GridLayoutManager.HORIZONTAL, false);
-        //Assigning the horizontal layoutManager the search flags at the top
-        ingredientRecyclerView.setLayoutManager(new GridLayoutManager(ingredientRecyclerView.getContext(), 1, GridLayoutManager.HORIZONTAL, false));
+       // layoutManager = new GridLayoutManager(recipeRecyclerView.getContext(), 2, GridLayoutManager.VERTICAL, false);
+
+
 
 
         ingredientList = new ArrayList<>();
+
 
         // A click listener is defined to handle the callback from the RecipeAsyncTask
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -118,32 +145,35 @@ public class SearchFragment extends Fragment{
                 closeKeyboard(getActivity(), searchText.getWindowToken());
 
                 // Store our string and generate an IngredientModel out of it.
-                ingredient = searchText.getText().toString().trim();
-
-                // Empty our search field
-                searchText.setText("");
-                newIngredient = new IngredientModel();
-                newIngredient.setName(ingredient);
+                newIngredient = getIngredientFromSearchBox(searchText);
 
 
-                Boolean alreadyStoredInList = false;
-                // Store our ingredient model in our ArrayList of ingredients
-                for(int i = 0; i < ingredientList.size(); i++)
-                {
-
-                    Log.d(TAG, "Printing ingredientList @" + Integer.toString(i) + ingredientList.get(i).getName());
-                    if (ingredientList.get(i).getName().equals(ingredient))
-                        alreadyStoredInList = true;
-                }
-                if(!alreadyStoredInList && !ingredient.equals("")) {
+                if(!newIngredient.getName().equals("") && !ingredientList.contains(newIngredient)) {
                     ingredientList.add(newIngredient);
                 }
 
                 ingredientAdapter = new IngredientAdapter(ingredientList);
+                ingredientAdapter.setOnItemSelected(new IngredientAdapter.OnItemSelected(){
+                    @Override
+                    public void onSelected(IngredientModel ingredientModel)
+                    {
+                        // On selected remove our ingredient model from our list.
+                        if (onItemSelected != null) {
+                            onItemSelected.onSelected(ingredientModel);
+                        }
+                        ingredientList.remove(ingredientModel);
+                        // Assigning the search text flags an adapter.
+                        ingredientRecyclerView.setAdapter(ingredientAdapter);
+                        //Assigning the horizontal layoutManager the search flags at the top
+                        ingredientRecyclerView.setLayoutManager(new GridLayoutManager(ingredientRecyclerView.getContext(), 1, GridLayoutManager.HORIZONTAL, false));
+
+                    }
+                });
 
                 // Assigning the search text flags an adapter.
                 ingredientRecyclerView.setAdapter(ingredientAdapter);
-
+                //Assigning the horizontal layoutManager the search flags at the top
+                ingredientRecyclerView.setLayoutManager(new GridLayoutManager(ingredientRecyclerView.getContext(), 1, GridLayoutManager.HORIZONTAL, false));
 
 
                 String concatenatedSearchParam = "";
@@ -153,12 +183,14 @@ public class SearchFragment extends Fragment{
                     concatenatedSearchParam += ingredientList.get(i).getName() + " ";
 
                 // Set our textview for last searched text
-                lastSearchedText.setText(concatenatedSearchParam);
+                lastSearchedText.setText(AppDefines.BASE_SEARCH_RESPONSE + concatenatedSearchParam);
 
 
 
                 ApiClient.getInstance().getRecipeApiAdapter()
-                        .getRecipeSearchResults(Integer.toString(scrollDownCounter * AppDefines.SCROLLDOWN_MULTIPLIER),
+                        .getRecipeSearchResults(
+                                allergies,
+                                Integer.toString(scrollDownCounter * AppDefines.SCROLLDOWN_MULTIPLIER),
                                 concatenatedSearchParam)
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -188,13 +220,11 @@ public class SearchFragment extends Fragment{
                                     }
                                 });
 
-                                // Assigning the LayoutManager to the RecyclerView
-                                recipeRecyclerView.setLayoutManager(layoutManager);
-                                // Assigning the Adapter to the RecyclerView. If this isn't done, the view will not populate
-                                recipeRecyclerView.setAdapter(adapter);
 
-                                // Instantiate a new AsyncTask to make an http call on background thread.
-                                // RecipeSearch task now has a constructor which requires an instance of IRecipeCaallbackListener
+                          //      recipeRecyclerView.setLayoutManager(layoutManager);
+
+                   //             recipeRecyclerView.setAdapter(adapter);
+
 
 
                             }
@@ -202,10 +232,92 @@ public class SearchFragment extends Fragment{
             }
         });
 
+
+
+        addItemButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeKeyboard(getActivity(), searchText.getWindowToken());
+                newIngredient = getIngredientFromSearchBox(searchText);
+
+                if(!newIngredient.getName().equals("") && !ingredientList.contains(newIngredient)) {
+                    ingredientList.add(newIngredient);
+                }
+
+                ingredientAdapter = new IngredientAdapter(ingredientList);
+                ingredientAdapter.setOnItemSelected(new IngredientAdapter.OnItemSelected(){
+                    @Override
+                    public void onSelected(IngredientModel ingredientModel)
+                    {
+                        // On selected remove our ingredient model from our list.
+                        if (onItemSelected != null) {
+                            onItemSelected.onSelected(ingredientModel);
+                        }
+                        ingredientList.remove(ingredientModel);
+                        // Assigning the search text flags an adapter.
+                        ingredientRecyclerView.setAdapter(ingredientAdapter);
+                        //Assigning the horizontal layoutManager the search flags at the top
+                        ingredientRecyclerView.setLayoutManager(new GridLayoutManager(ingredientRecyclerView.getContext(), 1, GridLayoutManager.HORIZONTAL, false));
+
+                    }
+                });
+                // Assigning the search text flags an adapter.
+                ingredientRecyclerView.setAdapter(ingredientAdapter);
+                ingredientRecyclerView.setLayoutManager(new GridLayoutManager(ingredientRecyclerView.getContext(), 1, GridLayoutManager.HORIZONTAL, false));
+
+            }
+        }
+        ); // End of addItem.setOnClickListener
+
+        allergiesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                registerForContextMenu(view);
+                getActivity().openContextMenu(view);
+            }
+        });
+
         return view;
     }
 
 
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view,ContextMenu.ContextMenuInfo menuInfo)
+    {
+        super.onCreateContextMenu(menu,view,menuInfo);
+        MenuInflater menuInflater = getActivity().getMenuInflater();
+        menuInflater.inflate(R.menu.allergies_menu,menu);
+        MenuItem item_dairy = (MenuItem)view.findViewById(R.id.id_dairy);
+        MenuItem item_egg = (MenuItem)view.findViewById(R.id.id_egg);
+
+
+
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item){
+        return true;
+       // item.setChecked(true);
+       //return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        // Handle actionbar clicks here.
+        return super.onOptionsItemSelected(item);
+    }
+
+    public IngredientModel getIngredientFromSearchBox(EditText searchText) {
+        // Store our string and generate an IngredientModel out of it.
+        String ingredient = searchText.getText().toString().trim();
+
+        // Empty our search field
+        searchText.setText("");
+        IngredientModel newIngredient = new IngredientModel();
+        newIngredient.setName(ingredient);
+    return newIngredient;
+    }
 
     public static void closeKeyboard(Context c, IBinder windowToken) {
         InputMethodManager mgr = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -221,6 +333,7 @@ public class SearchFragment extends Fragment{
     public void onDetach() {
         super.onDetach();
     }
+
 
     public void setOnFragmentEvent(OnFragmentEvent onFragmentEvent) {
         this.onFragmentEvent = onFragmentEvent;

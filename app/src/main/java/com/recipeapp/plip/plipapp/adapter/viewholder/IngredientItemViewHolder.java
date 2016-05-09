@@ -1,10 +1,14 @@
 package com.recipeapp.plip.plipapp.adapter.viewholder;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.recipeapp.plip.plipapp.R;
+import com.recipeapp.plip.plipapp.TestDatabaseActivity;
 import com.recipeapp.plip.plipapp.model.IngredientModel;
 
 
@@ -22,7 +26,6 @@ public class IngredientItemViewHolder extends RecyclerView.ViewHolder implements
         // assign layout instances to local versions
         this.item = item;
         ingredientName = (Button)itemView.findViewById(R.id.ingredientName);
-
         // Set the value of the recipeName
         ingredientName.setText(item.getName());
 

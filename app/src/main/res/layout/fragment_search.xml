@@ -8,17 +8,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context=".viewcontroller.fragment.SearchFragment"
-    android:gravity="center">
-
+    android:gravity="top|center">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/ingredientRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:minHeight="50dp"
+        android:layout_height="40dp"
         android:textAlignment="center"
-        android:longClickable="false" />
 
+        />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,23 +24,24 @@
         android:id="@+id/textView2"
         android:fontFamily="helvetica"
         android:gravity="center"
-        android:textSize="35sp"
-        android:paddingTop="40sp" />
+        android:textSize="35sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
         <EditText
             android:id="@+id/searchText"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
             android:maxLines="1"
-            android:layout_weight="1"
             android:hint="@string/search_text_hint"
-            android:gravity="center" />
+            android:gravity="center"
+
+            android:paddingTop="5dp" />
 
     </LinearLayout>
 
@@ -54,34 +52,78 @@
         android:layout_gravity="center_horizontal">
 
     <Button
-        android:id="@+id/addItem"
+        android:id="@+id/addItemButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="3dp"
         android:text="@string/addItemBTN"
         android:background="@color/colorPrimary"
-        android:textColor="#ffffff"
-        android:layout_marginRight="3dp"/>
+        android:textColor="@color/white"
+        />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/searchButton"
+        android:layout_marginLeft="3dp"
         android:text="@string/searchBTN"
         android:background="@color/colorPrimary"
-        android:textColor="#ffffff"
-        android:layout_marginLeft="3dp"/>
+        android:textColor="@color/white"
+        />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/lastSearchedText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        android:id="@+id/lastSearchedText"
+        android:maxLines="1"
+        />
 
-    <android.support.v7.widget.RecyclerView
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="50dp"
+        android:gravity="center_horizontal"
+
+        android:layout_gravity="bottom">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/allergiesBTN"
+            android:id="@+id/allergiesButton"
+            android:textColor="#ffffff"
+            android:background="@color/allergyRed" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cuisineBTN"
+            android:background="@color/cuisineYellow"
+            android:id="@+id/cuisineButton" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mealBTN"
+            android:background="@color/mealGreen"
+            android:textColor="@color/white"
+            android:id="@+id/mealButton" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView3"
+        android:src="@drawable/hangry"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="bottom|center_horizontal" />
+
+    <!--  <android.support.v7.widget.RecyclerView
         android:id="@+id/recipeRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="center" />
+        android:gravity="center" />-->
 </LinearLayout>

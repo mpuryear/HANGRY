@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+  <group android:checkableBehavior="all">
+    <item android:id="@+id/id_dairy"
+        android:title="@string/dairyAllergy"
+       ></item>
+    <item android:id="@+id/id_egg"
+        android:title="@string/eggAllergy"></item>
+    <item android:id="@+id/id_gluten"
+        android:title="@string/glutenAllergy"></item>
+    <item android:id="@+id/id_peanut"
+        android:title="@string/peanutAllergy"></item>
+    <item android:id="@+id/id_sesame"
+        android:title="@string/sesameAllergy"></item>
+    <item android:id="@+id/id_seafood"
+        android:title="@string/seafoodAllergy"></item>
+    <item android:id="@+id/id_shellfish"
+        android:title="@string/shellfishAllergy"></item>
+    <item android:id="@+id/id_soy"
+        android:title="@string/soyAllergy"></item>
+    <item android:id="@+id/id_sulfite"
+        android:title="@string/sulfiteAllergy"></item>
+    <item android:id="@+id/id_treenut"
+        android:title="@string/treenutAllergy"></item>
+    <item android:id="@+id/id_wheat"
+        android:title="@string/wheatAllergy"></item>
+</group>
+
+</menu>

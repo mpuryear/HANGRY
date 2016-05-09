@@ -13,6 +13,7 @@ public interface RecipeApiAdapter {
     @Headers("X-Mashape-Key: 9WLvQTpY6pmshsB2bkvHaMWU6MaJp1ROaugjsnPbkqB5D8i082")
     @GET("recipes/search?number=10&")
     Observable<ComplexSearchResultsModel> getRecipeSearchResults(
+            @Query("intolerances") String allergies,
             @Query("offset")String offsetNumber,
             @Query("query") String searchString);
 

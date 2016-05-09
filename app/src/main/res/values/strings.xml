@@ -14,6 +14,22 @@
     <!--Fragment_Search Strings-->
     <string name="addItemBTN">Add Item</string>
     <string name="searchBTN">Search</string>
+    <string name="allergiesBTN">Allergies</string>
+    <string name="cuisineBTN">Cuisine</string>
+    <string name="mealBTN">Meal</string>
+
+    <!--Allergy display strings-->
+    <string name="dairyAllergy">Dairy</string>
+    <string name="eggAllergy">Egg</string>
+    <string name="glutenAllergy">Gluten</string>
+    <string name="peanutAllergy">Peanut</string>
+    <string name="sesameAllergy">Sesame</string>
+    <string name="seafoodAllergy">Seafood</string>
+    <string name="shellfishAllergy">Shellfish</string>
+    <string name="soyAllergy">Soy</string>
+    <string name="sulfiteAllergy">Sulfite</string>
+    <string name="treenutAllergy">Tree Nut</string>
+    <string name="wheatAllergy">Wheat</string>
 
 
     <!-- Stephanie's Strings-->

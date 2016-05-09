@@ -92,6 +92,8 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
                        .commit();
             }
         });
+
+
         // Testing Nav Bar:
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -145,6 +147,8 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
     public void onBackPressed() {
 
     }
+
+    //Allergy menu methods start here.
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
