@@ -86,7 +86,7 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, recipeFragment)
                         .addToBackStack(RecipeFragment.class.getSimpleName())
-                       .commit();
+                        .commit();
             }
         });
         // Testing Nav Bar:
