@@ -12,10 +12,23 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--Fragment_Search Strings-->
-    <string name="addItemBTN">Add Ingredient Item</string>
+    <string name="addItemBTN">Add Item</string>
+    <string name="searchBTN">Search</string>
 
 
     <!-- Stephanie's Strings-->
     <string name="ingr_box">What ingredients do you have?</string>
     <string name="recipe">What are you cooking?</string>
+
+    <string-array  name="nav_drawer_items">
+        <item> Inventory </item>
+        <item> Recipe History </item>
+        <item> Recipe Results </item>
+    </string-array>
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_menu_gallery</item>
+        <item>@drawable/ic_menu_slideshow</item>
+        <item>@drawable/ic_menu_camera</item>
+    </array>
+
 </resources>

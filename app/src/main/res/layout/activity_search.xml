@@ -22,6 +22,12 @@
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
 
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/ingredientRecyclerView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1" />-->
+
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/container"
@@ -36,6 +42,7 @@
             android:id="@+id/viewpager"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:layout_marginTop="60dp"
             />
 
     </FrameLayout>

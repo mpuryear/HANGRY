@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.recipeapp.plip.plipapp.AppDefines;
 import com.recipeapp.plip.plipapp.R;
 import com.recipeapp.plip.plipapp.adapter.IngredientAdapter;
 import com.recipeapp.plip.plipapp.adapter.RecipeAdapter;
@@ -50,14 +51,15 @@ public class SearchFragment extends Fragment{
     private IngredientModel newIngredient;
     private Button searchButton;
     private TextView lastSearchedText;
-    private RecyclerView recipeRecyclerView;
+    public RecyclerView recipeRecyclerView;
     private RecyclerView ingredientRecyclerView;
     private RecipeAdapter adapter;
     private IngredientAdapter ingredientAdapter;
-    private LinearLayoutManager layoutManager;
+    private GridLayoutManager layoutManager;
     private OnFragmentEvent onFragmentEvent;
     private ComplexRecipeItemModel testModel;
     private ArrayList<ComplexRecipeItemModel> testList;
+    private Integer scrollDownCounter;
 //    public static ArrayList<IngredientModel> publicIngredientList;
 
 
@@ -96,15 +98,16 @@ public class SearchFragment extends Fragment{
         recipeRecyclerView = (RecyclerView)view.findViewById(R.id.recipeRecyclerView);
         ingredientRecyclerView = (RecyclerView)view.findViewById(R.id.ingredientRecyclerView);
 
+        scrollDownCounter = 0;
+
         // A RecyclerView needs a layout manager assigned to instruct it on how to lay content out
-        layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        layoutManager = new GridLayoutManager(recipeRecyclerView.getContext(), 2, GridLayoutManager.VERTICAL, false);
        // ingredientLayoutManager = new GridLayoutManager(getActivity(), GridLayoutManager.HORIZONTAL, false);
         //Assigning the horizontal layoutManager the search flags at the top
         ingredientRecyclerView.setLayoutManager(new GridLayoutManager(ingredientRecyclerView.getContext(), 1, GridLayoutManager.HORIZONTAL, false));
 
 
         ingredientList = new ArrayList<>();
-
 
         // A click listener is defined to handle the callback from the RecipeAsyncTask
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +137,6 @@ public class SearchFragment extends Fragment{
                 }
                 if(!alreadyStoredInList && !ingredient.equals("")) {
                     ingredientList.add(newIngredient);
-//                    publicIngredientList.add(newIngredient);
                 }
 
                 ingredientAdapter = new IngredientAdapter(ingredientList);
@@ -156,7 +158,7 @@ public class SearchFragment extends Fragment{
 
 
                 ApiClient.getInstance().getRecipeApiAdapter()
-                        .getRecipeSearchResults(
+                        .getRecipeSearchResults(Integer.toString(scrollDownCounter * AppDefines.SCROLLDOWN_MULTIPLIER),
                                 concatenatedSearchParam)
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -187,7 +189,7 @@ public class SearchFragment extends Fragment{
                                 });
 
                                 // Assigning the LayoutManager to the RecyclerView
-                                recipeRecyclerView.setLayoutManager(new GridLayoutManager(ingredientRecyclerView.getContext(), 2, GridLayoutManager.VERTICAL, false));
+                                recipeRecyclerView.setLayoutManager(layoutManager);
                                 // Assigning the Adapter to the RecyclerView. If this isn't done, the view will not populate
                                 recipeRecyclerView.setAdapter(adapter);
 

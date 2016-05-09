@@ -52,6 +52,9 @@ public class RecipeFragment extends Fragment {
         if (getArguments() != null) {
             recipe = (ComplexRecipeItemModel)getArguments().getSerializable(RECIPE);
         }
+
+
+
     }
 
     // Once the fragment's view has been created, the RecipeItemModel data is assigned to the various
@@ -60,22 +63,22 @@ public class RecipeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_recipe, container, false);
-        recipeDetailThumbnail = (ImageView)view.findViewById(R.id.recipeDetailThumbnail);
-        recipeDetailName = (TextView)view.findViewById(R.id.recipeDetailName);
-        ingredientsUsedCount = (TextView)view.findViewById(R.id.id);
+        View view = inflater.inflate(R.layout.fragment_results, container, false);
+//        recipeDetailThumbnail = (ImageView)view.findViewById(R.id.recipeDetailThumbnail);
+//        recipeDetailName = (TextView)view.findViewById(R.id.recipeDetailName);
+     //   ingredientsUsedCount = (TextView)view.findViewById(R.id.id);
 
 
         // Use the Glide library (referenced in Gradle) to preload an image resource for the recipeDetailThumbnail
-        Glide.with(this).load(recipe.getImage())
-                .into(recipeDetailThumbnail);
+//        Glide.with(this).load(recipe.getImage())
+//                .into(recipeDetailThumbnail);
 
         // Set the value of the recipeDetailName
-        recipeDetailName.setText(recipe.getTitle());
+//        recipeDetailName.setText(recipe.getTitle());
 
         // An inline adapter is declared for the list view since it will only be handling a collection
         // of strings.
-        ingredientsUsedCount.setText(recipe.getId().toString()); // used to be getIngredients
+//        ingredientsUsedCount.setText(recipe.getId()); // used to be getIngredients
 
         return view;
     }

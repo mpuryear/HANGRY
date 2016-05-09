@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -9,18 +10,14 @@
     tools:context=".viewcontroller.fragment.SearchFragment"
     android:gravity="center">
 
-    <!--<include-->
-        <!--layout="@layout/app_bar_main"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent" />-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/ingredientRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="15dp"
-        android:layout_weight="25"
-         />
-
+        android:layout_weight="1"
+        android:minHeight="50dp"
+        android:textAlignment="center"
+        android:longClickable="false" />
 
     <TextView
         android:layout_width="match_parent"
@@ -28,11 +25,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/app_name"
         android:id="@+id/textView2"
-
-
+        android:fontFamily="helvetica"
         android:gravity="center"
         android:textSize="35sp"
         android:paddingTop="40sp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,7 +37,7 @@
 
         <EditText
             android:id="@+id/searchText"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="text"
             android:maxLines="1"
@@ -50,12 +47,30 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+
     <Button
-        android:id="@+id/searchButton"
+        android:id="@+id/addItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/addItemBTN"
-        android:layout_gravity="center_horizontal" />
+        android:background="@color/colorPrimary"
+        android:textColor="#ffffff"
+        android:layout_marginRight="3dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchButton"
+        android:text="@string/searchBTN"
+        android:background="@color/colorPrimary"
+        android:textColor="#ffffff"
+        android:layout_marginLeft="3dp"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/lastSearchedText"

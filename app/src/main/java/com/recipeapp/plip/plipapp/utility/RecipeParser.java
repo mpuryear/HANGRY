@@ -1,5 +1,7 @@
 package com.recipeapp.plip.plipapp.utility;
 
+import android.support.v4.app.FragmentPagerAdapter;
+
 import com.google.gson.Gson;
 import com.recipeapp.plip.plipapp.model.ComplexSearchResultsModel;
 

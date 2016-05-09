@@ -1,5 +1,7 @@
 package com.recipeapp.plip.plipapp.model;
 
+import com.recipeapp.plip.plipapp.AppDefines;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -11,66 +13,37 @@ public class ComplexRecipeItemModel implements Serializable {
     private String id;
     private String title;
     private String image;
-    private String imageType;
-    /*
-    private String calories;
-    private String protein;
-    private String fat;
-    private String carbs;
-    private String usedIngredientCount;
-    private String missedIngredientCount;
-    private String likes;
+    private String readyInMinutes;
 
-    */
     public String getId() {
         return id;
     }
-/*
-    public String getUsedIngredientCount() {
-        return usedIngredientCount;
+
+    public void setId(String id) {
+        this.id = id;
     }
-
-    public String getMissedIngredientCount() {
-        return missedIngredientCount;
-    }
-
-    public String getLikes() {
-        return likes;
-    }
-*/
-    public void setId(String id) { this.id = id; }
-
-    public void setTitle(String title) { this.title = title;}
-
-    public void setImage(String Image) { this.image = image;}
-
-    public void setImageType(String imageType) {this.imageType = imageType; }
 
     public String getTitle() {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getImage() {
-        return image;
+        return AppDefines.BASE_IMAGE_URL + image;
     }
 
-    public String getImageType() {
-        return imageType;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-//    public String getCalories() {
-//        return calories;
-//    }
-//
-//    public String getProtein() {
-//        return protein;
-//    }
-//
-//    public String getFat() {
-//        return fat;
-//    }
-//
-//    public String getCarbs() {
-//        return carbs;
-//    }
+    public String getReadyInMinutes() {
+        return readyInMinutes;
+    }
+
+    public void setReadyInMinutes(String readyInMinutes) {
+        this.readyInMinutes = readyInMinutes;
+    }
 }

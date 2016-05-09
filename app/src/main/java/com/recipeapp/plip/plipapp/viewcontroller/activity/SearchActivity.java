@@ -24,12 +24,14 @@ import android.widget.Toast;
 import com.recipeapp.plip.plipapp.R;
 import com.recipeapp.plip.plipapp.RecipeGrid;
 import com.recipeapp.plip.plipapp.RecipeTypes;
+import com.recipeapp.plip.plipapp.adapter.RecipeAdapter;
 import com.recipeapp.plip.plipapp.model.ComplexRecipeItemModel;
 import com.recipeapp.plip.plipapp.viewcontroller.Swiping.TypesFragment;
 import com.recipeapp.plip.plipapp.viewcontroller.fragment.RecipeFragment;
 import com.recipeapp.plip.plipapp.viewcontroller.fragment.ResultsFragment;
 import com.recipeapp.plip.plipapp.viewcontroller.fragment.SearchFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -66,7 +68,8 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
         searchFragment = SearchFragment.newInstance();
         menuDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
 
-
+        // Allows swiping left and right with typesFragment and SearchFragment
+        this.initializePaging();
         // A listener that handles an event from the SearchFragment. In this case, it is handling the
         // selection of an item from the search results RecyclerView
         searchFragment.setOnFragmentEvent(new SearchFragment.OnFragmentEvent() {
@@ -115,17 +118,16 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        // Navigation button for results
+//         Navigation button for results
 //        onNavigationItemSelected();
 
-    // Allows swiping left and right with typesFragment and SearchFragment
-        this.initializePaging();
     }
 
     // Start of ViewPagerFragmentActivity Code
     private void initializePaging() {
-        List<Fragment> fragments = new Vector<Fragment>();
+        List<Fragment> fragments = new Vector<>();
         fragments.add(Fragment.instantiate(this, SearchFragment.class.getName()));
+//        fragments.add(Fragment.instantiate(this, RecipeFragment.class.getName()));
         fragments.add(Fragment.instantiate(this, TypesFragment.class.getName()));
         this.mPagerAdapter  = new com.recipeapp.plip.plipapp.viewcontroller.Swiping.PagerAdapter(super.getSupportFragmentManager(), fragments);
 

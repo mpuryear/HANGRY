@@ -10,6 +10,8 @@ import java.util.List;
  * Created by SugarPalaces on 5/1/16.
  */
 public class PagerAdapter extends FragmentPagerAdapter {
+    public static int pos = 0;
+
     private List<Fragment> fragments;
 
     public PagerAdapter(FragmentManager fm, List<Fragment> fragments) {
@@ -26,4 +28,14 @@ public class PagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return this.fragments.size();
     }
+
+
+    public static int getPos() {
+        return pos;
+    }
+
+    public static void setPos(int pos) {
+        PagerAdapter.pos = pos;
+    }
+
 }
