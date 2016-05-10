@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="none">
+        <item android:id="@+id/mainCourseButton"
+            android:title="@string/mainCourseButton"
+            ></item>
+        <item android:id="@+id/sideDishButton"
+            android:title="@string/sideDishButton"
+            ></item>
+        <item android:id="@+id/dessertButton"
+            android:title="@string/dessertButton"
+            ></item>
+        <item android:id="@+id/appetizerButton"
+            android:title="@string/appetizerButton"
+            ></item>
+        <item android:id="@+id/saladButton"
+            android:title="@string/saladButton"
+            ></item>
+        <item android:id="@+id/breakfastButton"
+            android:title="@string/breakfastButton"
+            ></item>
+        <item android:id="@+id/beverageButton"
+            android:title="@string/beverageButton"
+            ></item>
+        <item android:id="@+id/none"
+            android:title="none"
+            ></item>
+    </group>
+</menu>

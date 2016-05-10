@@ -5,6 +5,7 @@ import android.support.design.widget.NavigationView;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -38,7 +39,7 @@ import java.util.Vector;
 /**
  * An Activity controlling the Search feature
  */
-public class SearchActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class SearchActivity extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     // Declaration of the fragments that we will be injecting into our layout
     private SearchFragment searchFragment;
@@ -46,6 +47,7 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
     private ResultsFragment resultsFragment;
     private DrawerLayout menuDrawer;
     private ActionBarDrawerToggle toggle;
+    private List<Fragment> fragments = new Vector<>();
 //    private TypesFragment typesFragment;r
 
     private PagerAdapter mPagerAdapter;
@@ -69,7 +71,18 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
         menuDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
 
         // Allows swiping left and right with typesFragment and SearchFragment
-        this.initializePaging();
+
+         //this.initializePaging();
+
+
+        //fragments.add(searchFragment);
+        //   fragments.add(Fragment.instantiate(this, RecipeAdapter.class.getName()));
+        //  fragments.add(Fragment.instantiate(this, RecipeFragment.class.getName()));
+/*        mPagerAdapter = new com.recipeapp.plip.plipapp.viewcontroller.Swiping.PagerAdapter(super.getSupportFragmentManager(), fragments);
+
+        ViewPager pager = (ViewPager) super.findViewById(R.id.viewpager);
+        pager.setAdapter(this.mPagerAdapter);*/
+
         // A listener that handles an event from the SearchFragment. In this case, it is handling the
         // selection of an item from the search results RecyclerView
         searchFragment.setOnFragmentEvent(new SearchFragment.OnFragmentEvent() {
@@ -93,10 +106,15 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
             }
         });
 
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, searchFragment)
+                .addToBackStack(SearchFragment.class.getSimpleName())
+                .commit();
+
 
         // Testing Nav Bar:
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+       // setSupportActionBar(toolbar);
         toggle = new ActionBarDrawerToggle(
                 this, menuDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
 
@@ -125,17 +143,21 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
 
     }
 
+
     // Start of ViewPagerFragmentActivity Code
     private void initializePaging() {
-        List<Fragment> fragments = new Vector<>();
-        fragments.add(Fragment.instantiate(this, SearchFragment.class.getName()));
-//        fragments.add(Fragment.instantiate(this, RecipeFragment.class.getName()));
-        fragments.add(Fragment.instantiate(this, TypesFragment.class.getName()));
-        this.mPagerAdapter  = new com.recipeapp.plip.plipapp.viewcontroller.Swiping.PagerAdapter(super.getSupportFragmentManager(), fragments);
 
-        ViewPager pager = (ViewPager)super.findViewById(R.id.viewpager);
+       fragments.add(Fragment.instantiate(this, SearchFragment.class.getName()));
+       //   fragments.add(Fragment.instantiate(this, RecipeAdapter.class.getName()));
+     //  fragments.add(Fragment.instantiate(this, RecipeFragment.class.getName()));
+        mPagerAdapter = new com.recipeapp.plip.plipapp.viewcontroller.Swiping.PagerAdapter(super.getSupportFragmentManager(), fragments);
+
+        ViewPager pager = (ViewPager) super.findViewById(R.id.viewpager);
         pager.setAdapter(this.mPagerAdapter);
     }
+
+
+
     // End of ViewPageFragmentActivity Code
 
     @Override
@@ -143,11 +165,12 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
         super.onDestroy();
     }
 
+    /*
     @Override
     public void onBackPressed() {
 
     }
-
+*/
     //Allergy menu methods start here.
 
     @Override

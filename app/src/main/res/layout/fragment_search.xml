@@ -57,8 +57,8 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="3dp"
         android:text="@string/addItemBTN"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/white"
+        android:background="@drawable/blue_button"
+        style="@style/button_blue"
         />
 
     <Button
@@ -67,8 +67,8 @@
         android:id="@+id/searchButton"
         android:layout_marginLeft="3dp"
         android:text="@string/searchBTN"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/white"
+        android:background="@drawable/blue_button"
+        style="@style/button_blue"
         />
     </LinearLayout>
 
@@ -79,51 +79,61 @@
         android:maxLines="1"
         />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/errorMessage"
+        android:maxLines="1" />
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="50dp"
         android:gravity="center_horizontal"
 
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom"
+        android:paddingTop="50dp">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/allergiesBTN"
             android:id="@+id/allergiesButton"
-            android:textColor="#ffffff"
-            android:background="@color/allergyRed" />
+            android:textColor="@color/white"
+            android:background="@drawable/red_button"
+            style="@style/button_red"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cuisineBTN"
-            android:background="@color/cuisineYellow"
-            android:id="@+id/cuisineButton" />
+            android:background="@drawable/yellow_button"
+            android:id="@+id/cuisineButton"
+            style="@style/button_yellow"/>
+
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/mealBTN"
-            android:background="@color/mealGreen"
+            android:background="@drawable/green_button"
             android:textColor="@color/white"
-            android:id="@+id/mealButton" />
+            android:id="@+id/mealButton"
+            style="@style/button_green"/>
     </LinearLayout>
 
-    <ImageView
+   <!-- <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/imageView3"
         android:src="@drawable/hangry"
         android:layout_marginTop="10dp"
-        android:layout_gravity="bottom|center_horizontal" />
+        android:layout_gravity="bottom|center_horizontal" />-->
 
-    <!--  <android.support.v7.widget.RecyclerView
+     <android.support.v7.widget.RecyclerView
         android:id="@+id/recipeRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="center" />-->
+        android:gravity="center" />
 </LinearLayout>

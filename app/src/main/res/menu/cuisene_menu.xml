@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="none">
+    <item android:id="@+id/africanCuisine"
+        android:title="@string/africanCuisine"
+        ></item>
+    <item android:id="@+id/chineseCuisine"
+        android:title="@string/chineseCuisine"></item>
+
+    <item android:id="@+id/japaneseCuisine"
+        android:title="@string/japaneseCuisine"
+        ></item>
+
+    <item android:id="@+id/indianCuisine"
+        android:title="@string/indianCuisine"></item>
+
+    <item android:id="@+id/frenchCuisine"
+        android:title="@string/frenchCuisine"
+        ></item>
+
+    <item android:id="@+id/italianCuisine"
+        android:title="@string/italianCuisine"></item>
+
+    <item android:id="@+id/mexicanCuisine"
+        android:title="@string/mexicanCuisine"
+        ></item>
+    <item android:id="@+id/middleEasternCuisine"
+        android:title="@string/middleEasternCuisine"></item>
+
+    <item android:id="@+id/jewishCuisine"
+        android:title="@string/jewishCuisine"
+        ></item>
+    <item android:id="@+id/americanCuisine"
+        android:title="@string/americanCuisine"></item>
+
+    <item android:id="@+id/southernCuisine"
+        android:title="@string/southernCuisine"
+        ></item>
+    <item android:id="@+id/caribbeanCuisine"
+        android:title="@string/caribbeanCuisine"></item>
+        <item android:id="@+id/none"
+            android:title="none"></item>
+
+</group>
+</menu>

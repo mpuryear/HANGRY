@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:text="Selection Button"
         android:id="@+id/allergiesCheckbox"
-        android:onClick="selectAllergy"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="85dp"/>

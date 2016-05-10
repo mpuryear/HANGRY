@@ -18,7 +18,9 @@
     <string name="cuisineBTN">Cuisine</string>
     <string name="mealBTN">Meal</string>
 
+
     <!--Allergy display strings-->
+    <style name="none"></style>
     <string name="dairyAllergy">Dairy</string>
     <string name="eggAllergy">Egg</string>
     <string name="glutenAllergy">Gluten</string>
@@ -30,6 +32,30 @@
     <string name="sulfiteAllergy">Sulfite</string>
     <string name="treenutAllergy">Tree Nut</string>
     <string name="wheatAllergy">Wheat</string>
+
+    <!--Meals display strings-->
+    <string name="mainCourseButton">Main Course</string>
+    <string name="sideDishButton">Side Dish</string>
+    <string name="dessertButton">Dessert</string>
+    <string name="appetizerButton">Appetizer</string>
+    <string name="saladButton">Salad</string>
+    <string name="breakfastButton">Breakfast</string>
+    <string name="beverageButton">Beverage</string>
+
+    <!-- Cuisine display strings -->
+    <string name="africanCuisine">African</string>
+    <string name="chineseCuisine">Chinese</string>
+    <string name="japaneseCuisine">Japanese</string>
+    <string name="indianCuisine">Indian</string>
+    <string name="frenchCuisine">French</string>
+    <string name="italianCuisine">Italian</string>
+    <string name="mexicanCuisine">Mexican</string>
+    <string name="middleEasternCuisine">Middle Eastern</string>
+    <string name="jewishCuisine">Jewish</string>
+    <string name="americanCuisine">American</string>
+    <string name="southernCuisine">Southern</string>
+    <string name="caribbeanCuisine">Caribbean</string>
+
 
 
     <!-- Stephanie's Strings-->

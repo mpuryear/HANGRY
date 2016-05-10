@@ -4,7 +4,11 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="allergyRed">#801919</color>
+    <color name="allergyRedLight">#df1010</color>
     <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
     <color name="cuisineYellow">#FFFFFC66</color>
-    <color name="mealGreen">#FF0B6309</color>
+    <color name="cuisineYellowDark">#7c7b3e</color>
+    <color name="mealGreen">#10990d</color>
+    <color name="mealGreenDark">#0b6309</color>
 </resources>
