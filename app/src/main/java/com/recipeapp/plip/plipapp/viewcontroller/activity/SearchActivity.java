@@ -161,6 +161,18 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
     // End of ViewPageFragmentActivity Code
 
     @Override
+    public void onBackPressed(){
+        if(getSupportFragmentManager().getBackStackEntryCount() == 1){
+            return;
+        }
+        else{
+            super.onBackPressed();
+        }
+    }
+
+
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
     }

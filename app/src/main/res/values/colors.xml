@@ -11,4 +11,5 @@
     <color name="cuisineYellowDark">#7c7b3e</color>
     <color name="mealGreen">#10990d</color>
     <color name="mealGreenDark">#0b6309</color>
+    <color name="headerRed">#c32817</color>
 </resources>
