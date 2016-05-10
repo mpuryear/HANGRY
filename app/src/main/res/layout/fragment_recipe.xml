@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -11,30 +11,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
         -->
-
+<!-- Image background -->
     <ImageView android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:id="@+id/recipeFragmentBackground"
         android:src="@color/white"
         android:scaleType="centerCrop"
-        ></ImageView>
+        android:clickable="true"></ImageView>
 
-    <FrameLayout
+
+    <!-- Blank background to print onto -->
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:src="@color/lightBlueRecipeBackground"
+        android:padding="24dp"></ImageView>
+
 
         <TextView
             android:id="@+id/recipeDetailName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:singleLine="false"/>
+            android:singleLine="false"
+            android:padding="32dp"/>
 
         <TextView
             android:id="@+id/id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="32dp"
             />
-    </FrameLayout>
 
-</LinearLayout>
+</FrameLayout>

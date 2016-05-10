@@ -15,16 +15,18 @@
         android:layout_centerHorizontal="true"/>
     <TextView
         android:id="@+id/recipeName"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop ="true"
-        android:paddingTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
         android:layout_gravity="center_horizontal"
         android:layout_centerHorizontal="true"
         android:singleLine="false"
         android:textColor="#FFFFFF"
         android:shadowColor="#000000"
+        android:background="#92000000"
         android:shadowDx="1"
         android:shadowDy="1"
-        android:shadowRadius="2"/>
+        android:shadowRadius="2"
+        android:gravity="center_vertical|center_horizontal" />
 </RelativeLayout>
