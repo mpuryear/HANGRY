@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.recipeapp.plip.plipapp.R;
@@ -24,7 +25,7 @@ import com.recipeapp.plip.plipapp.model.RecipeItemModel;
  * to derive from the base ViewHolder.  A ViewHolder is intended to contain the data for a single item in
  * a collection to be bound to a an item view in the user interface.
  */
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeItemViewHolder> {
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeItemViewHolder> implements Serializable {
 
     // A local collection that will eventually be assigned a collection of RecipeItemModels as a
     // part of class instantiation

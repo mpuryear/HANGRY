@@ -64,7 +64,7 @@ public class RecipeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_recipe, container, false);
-        recipeDetailThumbnail = (ImageView)view.findViewById(R.id.recipeDetailThumbnail);
+        recipeDetailThumbnail = (ImageView)view.findViewById(R.id.recipeFragmentBackground);
         recipeDetailName = (TextView)view.findViewById(R.id.recipeDetailName);
      //   ingredientsUsedCount = (TextView)view.findViewById(R.id.id);
 

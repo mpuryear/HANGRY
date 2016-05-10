@@ -2,10 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context=".viewcontroller.fragment.SearchFragment"
     android:gravity="top|center">
@@ -16,15 +12,13 @@
         android:textAlignment="center"
 
         />
-    <TextView
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/app_name"
-        android:id="@+id/textView2"
-        android:fontFamily="helvetica"
-        android:gravity="center"
-        android:textSize="35sp" />
+        android:id="@+id/hangryTitle"
+        android:src="@drawable/hangy_title"
+
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -72,12 +66,13 @@
         />
     </LinearLayout>
 
+    <!--
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/lastSearchedText"
         android:maxLines="1"
-        />
+        /> -->
 
     <TextView
         android:layout_width="match_parent"
@@ -92,7 +87,7 @@
         android:gravity="center_horizontal"
 
         android:layout_gravity="bottom"
-        android:paddingTop="50dp">
+        android:paddingTop="20dp">
 
         <Button
             android:layout_width="wrap_content"
@@ -130,10 +125,18 @@
         android:layout_marginTop="10dp"
         android:layout_gravity="bottom|center_horizontal" />-->
 
-     <android.support.v7.widget.RecyclerView
+  <android.support.v7.widget.RecyclerView
         android:id="@+id/recipeRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center" />
+        android:gravity="center"
+      android:alpha="1"
+      android:clickable="false"
+      android:layout_marginTop="500dp" />
 </LinearLayout>
+
+    <!--android:paddingBottom="@dimen/activity_vertical_margin"-->
+    <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingTop="@dimen/activity_vertical_margin"-->

@@ -100,7 +100,7 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
                 // This transaction is replacing the SearchFragment with the RecipeFragment in the
                 // SearchActivity when the fragment event occurs.
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, recipeFragment)
+                        .add(R.id.container, recipeFragment)
                         .addToBackStack(RecipeFragment.class.getSimpleName())
                        .commit();
             }
@@ -222,13 +222,7 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
         } else if (id == R.id.nav_results)
         {
             Log.d(TAG, "GOT IN HERE - trying to go to the results page");
-//            Intent intent = new Intent(this, RecipeGrid.class);
-//            startActivity(intent);
-//            resultsFragment = ResultsFragment.newInstance();
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.container, resultsFragment)
-//                    .addToBackStack(ResultsFragment.class.getSimpleName())
-//                    .commit();
+//
         }
 //        } else if (id == R.id.nav_manage) {
 //

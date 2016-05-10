@@ -7,8 +7,8 @@
     <color name="allergyRedLight">#df1010</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
-    <color name="cuisineYellow">#FFFFFC66</color>
-    <color name="cuisineYellowDark">#7c7b3e</color>
+    <color name="cuisineYellow">#E7CC00</color>
+    <color name="cuisineYellowDark">#7C7B3E</color>
     <color name="mealGreen">#10990d</color>
     <color name="mealGreenDark">#0b6309</color>
     <color name="headerRed">#c32817</color>

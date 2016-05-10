@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
@@ -124,7 +125,7 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 // Assigning layout file instances of these UI elements to their java counterparts
         searchText = (EditText) view.findViewById(R.id.searchText);
-        lastSearchedText = (TextView) view.findViewById(R.id.lastSearchedText);
+//        lastSearchedText = (TextView) view.findViewById(R.id.lastSearchedText);
         errorMessage = (TextView) view.findViewById(R.id.errorMessage);
         searchButton = (Button) view.findViewById(R.id.searchButton);
         addItemButton = (Button) view.findViewById(R.id.addItemButton);
@@ -133,13 +134,13 @@ public class SearchFragment extends Fragment {
         mealsButton = (Button) view.findViewById(R.id.mealButton);
 
 
-        recipeRecyclerView = (RecyclerView) view.findViewById(R.id.recipeRecyclerView);
+       recipeRecyclerView = (RecyclerView) view.findViewById(R.id.recipeRecyclerView);
         ingredientRecyclerView = (RecyclerView) view.findViewById(R.id.ingredientRecyclerView);
 
         scrollDownCounter = 0;
 
 // A RecyclerView needs a layout manager assigned to instruct it on how to lay content out
-        layoutManager = new GridLayoutManager(recipeRecyclerView.getContext(), 2, GridLayoutManager.VERTICAL, false);
+        //layoutManager = new GridLayoutManager(recipeRecyclerView.getContext(), 2, GridLayoutManager.VERTICAL, false);
 
 
         ingredientList = new ArrayList<>();
@@ -191,11 +192,11 @@ public class SearchFragment extends Fragment {
                     concatenatedSearchParam += ingredientList.get(i).getName().trim() + " ";
 
 // Set our textview for last searched text
-                lastSearchedText.setText(allergiesType.trim() + " " +
-                        cuisineType.trim() + " " +
-                        mealType.trim() + " " +
-                        Integer.toString(scrollDownCounter * AppDefines.SCROLLDOWN_MULTIPLIER)
-                        + " " + concatenatedSearchParam);
+//                lastSearchedText.setText(allergiesType.trim() + " " +
+//                        cuisineType.trim() + " " +
+//                        mealType.trim() + " " +
+//                        Integer.toString(scrollDownCounter * AppDefines.SCROLLDOWN_MULTIPLIER)
+//                        + " " + concatenatedSearchParam);
 
 
                 ApiClient.getInstance().getRecipeApiAdapter()
@@ -234,14 +235,25 @@ public class SearchFragment extends Fragment {
                                 });
 
 
-                                recipeRecyclerView.setLayoutManager(layoutManager);
+                               recipeRecyclerView.setLayoutManager(layoutManager);
 
                                 recipeRecyclerView.setAdapter(adapter);
 
 // if our search yielded no results, tell the user
+
                                 if (adapter.getItemCount() == 0) {
+                                    Log.d(TAG, "The search returned no results.\n");
                                     errorMessage.setText("Your search yielded no results.");
-                                } else errorMessage.setText("");
+                                } else {
+                                       errorMessage.setText("");
+                                    ResultsFragment resultsFragment = ResultsFragment.newInstance(adapter);
+
+
+                                    getActivity().getSupportFragmentManager().beginTransaction()
+                                            .add(R.id.container, resultsFragment)
+                                            .addToBackStack(ResultsFragment.class.getSimpleName())
+                                            .commit();
+                                }
 
 
                             }
