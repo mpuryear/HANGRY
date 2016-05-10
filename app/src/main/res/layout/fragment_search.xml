@@ -108,6 +108,7 @@
             android:layout_height="wrap_content"
             android:text="@string/cuisineBTN"
             android:background="@drawable/yellow_button"
+            android:textColor="@color/white"
             android:id="@+id/cuisineButton"
             style="@style/button_yellow"/>
 
