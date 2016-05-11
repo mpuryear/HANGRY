@@ -1,4 +1,4 @@
-package com.recipeapp.plip.plipapp;
+package com.recipeapp.plip.plipapp.model;
 
 /**
  * Created by Hanani on 4/20/16.

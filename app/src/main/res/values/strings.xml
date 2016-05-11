@@ -57,6 +57,8 @@
     <string name="caribbeanCuisine">Caribbean</string>
 
 
+    <!-- Tab character for user in textview -->
+    <string name="tab">\u0009</string>
 
     <!-- Stephanie's Strings-->
     <string name="ingr_box">What ingredients do you have?</string>

@@ -9,6 +9,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.recipeapp.plip.plipapp.model.Comment;
+
 /**
  * Created by Hanani on 4/20/16.
  */

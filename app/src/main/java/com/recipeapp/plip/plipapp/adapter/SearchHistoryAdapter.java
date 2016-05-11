@@ -6,12 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-
 import com.recipeapp.plip.plipapp.R;
 import com.recipeapp.plip.plipapp.adapter.viewholder.RecipeItemViewHolder;
+import com.recipeapp.plip.plipapp.adapter.viewholder.SearchHistoryViewHolder;
 import com.recipeapp.plip.plipapp.model.ComplexRecipeItemModel;
+import com.recipeapp.plip.plipapp.model.SearchHistoryModel;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Adapter classes are responsible for mapping the data in large sets of objects into the views
@@ -20,46 +22,46 @@ import com.recipeapp.plip.plipapp.model.ComplexRecipeItemModel;
  * Therefore, we need to extend the RecyclerView.Adapter class.
  *
  * This abstract class is templated to require a class deriving from RecyclerView.ViewHolder class. In t
- * this case, the {@link com.recipeapp.plip.plipapp.adapter.viewholder.RecipeItemViewHolder} class has been created
+ * this case, the {@link RecipeItemViewHolder} class has been created
  * to derive from the base ViewHolder.  A ViewHolder is intended to contain the data for a single item in
  * a collection to be bound to a an item view in the user interface.
  */
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeItemViewHolder> implements Serializable {
+public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryViewHolder> implements Serializable {
 
     // A local collection that will eventually be assigned a collection of RecipeItemModels as a
     // part of class instantiation
-    private ArrayList<ComplexRecipeItemModel> recipeItemCollection;
+    private ArrayList<SearchHistoryModel> recipeItemCollection;
     private OnItemSelected onItemSelected;
 
     // A constructor requiring a collection of RecipeItemModels
-    public RecipeAdapter(ArrayList<ComplexRecipeItemModel> recipeItemCollection){
+    public SearchHistoryAdapter(ArrayList<SearchHistoryModel> recipeItemCollection){
         this.recipeItemCollection = recipeItemCollection;
     }
 
     // An overridden virtual method that is responsible for creating an instance of a ViewHolder to
     // contain the data for a given object.
     @Override
-    public RecipeItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SearchHistoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         // LayoutInflater is a utility that allows us to assign a view to the local instance of View.
         // We need access to the ViewGroup parent (the base layout in SearchActivty) so that we have
         // the required context to find the item_recipe layout
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipe, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search_history, parent, false);
 
         // We return a new instance of RecipeItemViewHolder after passing it a a view to bind data to
-        return new RecipeItemViewHolder(view);
+        return new SearchHistoryViewHolder(view);
     }
 
     // An overridden virtual method that binds an item in the collection of RecipesItemModels to the
     // instance of the ViewHolder created in {@see onCreateViewHolder}.
     @Override
-    public void onBindViewHolder(RecipeItemViewHolder holder, int position) {
+    public void onBindViewHolder(SearchHistoryViewHolder holder, int position) {
         // Retrieve a RecipeItemModel from the collection
-        ComplexRecipeItemModel item = recipeItemCollection.get(position);
+        SearchHistoryModel item = recipeItemCollection.get(position);
 
-        holder.setOnRecipeItemClicked(new RecipeItemViewHolder.OnRecipeItemClicked() {
+        holder.setOnRecipeItemClicked(new SearchHistoryViewHolder.OnRecipeItemClicked(){
             @Override
-            public void onClick(ComplexRecipeItemModel item) {
+            public void onClick(SearchHistoryModel item) {
                 if(onItemSelected != null) {
                     onItemSelected.onSelected(item);
                 }
@@ -71,7 +73,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeItemViewHolder> im
     }
 
     @Override
-    public final void onViewRecycled(final RecipeItemViewHolder holder) {
+    public final void onViewRecycled(final SearchHistoryViewHolder holder) {
         super.onViewRecycled(holder);
         holder.setOnRecipeItemClicked(null);
         holder.unbind();
@@ -79,7 +81,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeItemViewHolder> im
 
     @Override
     public int getItemCount() {
-        return recipeItemCollection.size();
+          return recipeItemCollection.size();
     }
 
     // The setter that allows other classes to create a reference to the listener.
@@ -92,6 +94,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeItemViewHolder> im
     // the Adapter, and subsequently, up to the SearchFragment and SearchActivity by means of a chained
     // set of listeners.
     public interface OnItemSelected {
-        void onSelected(ComplexRecipeItemModel item);
+        void onSelected(SearchHistoryModel item);
     }
 }

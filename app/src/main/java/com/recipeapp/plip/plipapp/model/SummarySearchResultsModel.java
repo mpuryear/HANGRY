@@ -1,9 +1,11 @@
 package com.recipeapp.plip.plipapp.model;
 
+import java.io.Serializable;
+
 /**
  * Created by student on 5/10/16.
  */
-public class SummarySearchResultsModel {
+public class SummarySearchResultsModel implements Serializable {
     private String id;
     private String title;
     private String summary;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     >
-  <group android:checkableBehavior="all">
+  <group android:checkableBehavior="none">
     <item android:id="@+id/id_dairy"
         android:title="@string/dairyAllergy"
        ></item>
@@ -25,6 +25,8 @@
         android:title="@string/treenutAllergy"></item>
     <item android:id="@+id/id_wheat"
         android:title="@string/wheatAllergy"></item>
+    <item android:id="@+id/none"
+        android:title="none"></item>
 </group>
 
 </menu>

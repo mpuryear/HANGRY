@@ -41,7 +41,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientItemViewHo
     // instance of the ViewHolder created in {@see onCreateViewHolder}.
     @Override
     public void onBindViewHolder(IngredientItemViewHolder holder, int position) {
-        // Retrieve a RecipeItemModel from the collection
+        // Retrieve an IngredientModel from the collection
         IngredientModel item = ingredientItemCollection.get(position);
 
         holder.setOnIngredientItemClicked(new IngredientItemViewHolder.OnIngredientItemClicked() {

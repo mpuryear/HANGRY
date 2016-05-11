@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
+import com.recipeapp.plip.plipapp.model.Comment;
+
 public class TestDatabaseActivity extends ListActivity {
     private CommentsDataSource datasource;
 

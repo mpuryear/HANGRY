@@ -7,38 +7,39 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-
 import com.recipeapp.plip.plipapp.R;
 import com.recipeapp.plip.plipapp.model.ComplexRecipeItemModel;
+import com.recipeapp.plip.plipapp.model.SearchHistoryModel;
 
 /**
  * A class to bind RecipeItemModel date to item_recipe layouts for display as items in a RecyclerView.
  * Note that the ViewHolder implements the View.OnClickListener interface, allowing it's subelements
  * to respond to touch events in the view.
  */
-public class RecipeItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+public class SearchHistoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
     // Create local instances of the layout elements in item_recipe
     private ImageView recipeThumbnail;
     private TextView recipeName;
-    private ComplexRecipeItemModel item;
+    private SearchHistoryModel item;
     private OnRecipeItemClicked onRecipeItemClicked;
 
 
-    public RecipeItemViewHolder(final View itemView) {
+    public SearchHistoryViewHolder(final View itemView) {
         super(itemView);
     }
 
     // A method to bing a RecipeItemModel to the item_recipe layout
-    public final void bind(final ComplexRecipeItemModel item) {
+    public final void bind(final SearchHistoryModel item) {
         // assign layout instances to local versions
         this.item = item;
         recipeThumbnail = (ImageView)itemView.findViewById(R.id.recipeThumbnail);
         recipeName = (TextView)itemView.findViewById(R.id.recipeName);
 
+
         // Use the Glide library (referenced in Gradle) to preload an image resource for the recipeThumbnail
         Glide.with(itemView.getContext())
-                .load(item.getImage())
+                .load(item.getImageUrl())
                 .into(recipeThumbnail);
 
         // Set the value of the recipeName
@@ -71,7 +72,7 @@ public class RecipeItemViewHolder extends RecyclerView.ViewHolder implements Vie
     // classes that instantiate a new instance of this ViewHolder to subscribe to this interface
     // and listen for events.
     public interface OnRecipeItemClicked {
-        void onClick(ComplexRecipeItemModel item);
+        void onClick(SearchHistoryModel item);
     }
 
 }

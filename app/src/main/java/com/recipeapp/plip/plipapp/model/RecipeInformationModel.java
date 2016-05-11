@@ -52,7 +52,8 @@ public class RecipeInformationModel {
         this.readyInMinutes = readyInMinutes;
     }
 
-    class ExtendedIngredients
+
+    public class ExtendedIngredients
     {
         public String getName() {
             return name;
@@ -78,9 +79,9 @@ public class RecipeInformationModel {
             this.unit = unit;
         }
 
-        String name;
-        String amount;
-        String unit;
+        private String name;
+        private String amount;
+        private String unit;
 
     }
 }
