@@ -13,7 +13,7 @@ public class ComplexRecipeItemModel implements Serializable {
     private String id;
     private String title;
     private String image;
-    private String readyInMinutes;
+
 
     public String getId() {
         return id;
@@ -39,11 +39,4 @@ public class ComplexRecipeItemModel implements Serializable {
         this.image = image;
     }
 
-    public String getReadyInMinutes() {
-        return readyInMinutes;
-    }
-
-    public void setReadyInMinutes(String readyInMinutes) {
-        this.readyInMinutes = readyInMinutes;
-    }
 }

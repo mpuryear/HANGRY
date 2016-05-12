@@ -69,9 +69,6 @@ public class RecipeFragment extends Fragment {
         if (getArguments() != null) {
             recipe = (ComplexRecipeItemModel)getArguments().getSerializable(RECIPE);
         }
-
-
-
     }
 
     // Once the fragment's view has been created, the RecipeItemModel data is assigned to the various
@@ -81,7 +78,7 @@ public class RecipeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         concatenatedIngredientAmounts = "";
-       concatenatedIngredientNames = "";
+        concatenatedIngredientNames = "";
         summaryText = "";
 
         // Inflate the layout for this fragment
@@ -99,9 +96,6 @@ public class RecipeFragment extends Fragment {
         recipeName.setClickable(true);
         recipeName.setMovementMethod(LinkMovementMethod.getInstance());
 
-
-
-
         // We need to make 2 more api calls to correctly get all of our data.
 
         // Call for our summary
@@ -111,7 +105,6 @@ public class RecipeFragment extends Fragment {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<SummarySearchResultsModel>(){
-
 
                     @Override
                     public void onCompleted() {
@@ -132,8 +125,6 @@ public class RecipeFragment extends Fragment {
                         recipeSummary.setText(summaryText);
                     }
                 });
-
-
 
         // Listen for our ingredient information
         ApiClient.getInstance().getRecipeApiAdapter()
@@ -185,18 +176,6 @@ public class RecipeFragment extends Fragment {
                         recipeName.setText(Html.fromHtml(recipeNameLink));
                     }
                 });
-
-
-
-        // Set the value of the recipeDetailName
-       //recipeName.setText(recipe.getTitle());
-
-
-
-        // An inline adapter is declared for the list view since it will only be handling a collection
-        // of strings.
-//
-
 
         return view;
     }

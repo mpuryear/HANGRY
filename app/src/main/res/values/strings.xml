@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Hangry</string>
+    <string name="search_results_page_title">Search Results</string>
+    <string name="search_history_page_title">Search History</string>
     <string name="search_text_hint">Enter search terms...</string>
     <string name= "nav_contact_info">For assistance, contact: hangry_support@plip.com</string>
     <string name="nav_header">Hangry</string>

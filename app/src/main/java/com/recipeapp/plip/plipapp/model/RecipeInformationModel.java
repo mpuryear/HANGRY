@@ -12,6 +12,16 @@ public class RecipeInformationModel {
     private String title;
     private String readyInMinutes;
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    private String image;
+
     public String getSourceUrl() {
         return sourceUrl;
     }

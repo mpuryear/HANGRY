@@ -10,22 +10,31 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
 import android.widget.Toast;
 
+import com.recipeapp.plip.plipapp.AppDefines;
 import com.recipeapp.plip.plipapp.R;
 import com.recipeapp.plip.plipapp.model.ComplexRecipeItemModel;
 import com.recipeapp.plip.plipapp.model.ComplexSearchResultsModel;
+import com.recipeapp.plip.plipapp.model.FavoriteRecipeModel;
 import com.recipeapp.plip.plipapp.model.SearchHistoryModel;
+import com.recipeapp.plip.plipapp.service.api.ApiClient;
+import com.recipeapp.plip.plipapp.viewcontroller.fragment.FavoritesFragment;
 import com.recipeapp.plip.plipapp.viewcontroller.fragment.RecipeFragment;
 import com.recipeapp.plip.plipapp.viewcontroller.fragment.ResultsFragment;
 import com.recipeapp.plip.plipapp.viewcontroller.fragment.SearchFragment;
 import com.recipeapp.plip.plipapp.viewcontroller.fragment.SearchHistoryFragment;
 
 import java.util.ArrayList;
+
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * An Activity controlling the Search feature
@@ -36,6 +45,7 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
     private SearchFragment searchFragment;
     private RecipeFragment recipeFragment;
     private ResultsFragment resultsFragment;
+    private FavoritesFragment favoritesFragment;
     private SearchHistoryFragment searchHistoryFragment;
     private ActionBarDrawerToggle toggle;
     private DrawerLayout menuDrawer;
@@ -43,12 +53,11 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
     private NavigationView navigationView;
     private ArrayList<SearchHistoryModel> searchHistoryModels;
     private SearchHistoryModel searchHistoryModel;
+    private FavoriteRecipeModel favoriteRecipeModel;
+    private Toolbar toolbar;
 
     // ToDO: count as the user scrolls to the bottom of the recycler view and repopulate
     private int timesCalled;
-
-
-
 
     private final String TAG = "TKT";
 
@@ -58,23 +67,14 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-
         timesCalled = 0;
         searchHistoryModels = new ArrayList<>();
 
         // Creation of a new fragment instance
         searchFragment = SearchFragment.newInstance();
         searchHistoryFragment = SearchHistoryFragment.newInstance(null);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         menuDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-      //  menuList = (ListView) findViewById(R.id.nav_view);
-
-
-
-        // NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-
-
-
 
         // A listener that handles an event from the SearchFragment. In this case, it is handling the
         // selection of an item from the search results RecyclerView
@@ -97,10 +97,6 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
                     searchHistoryModels.add(searchHistoryModel);
                 }
                 Log.d(TAG, "onOnFragmentEvent");
-
-
-
-
 
                 resultsFragment.setOnFragmentEvent(new ResultsFragment.OnFragmentEvent() {
 
@@ -130,9 +126,6 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
             }
         });
 
-
-
-
         toolbar.setTitle("Hangry");
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, searchFragment)
@@ -148,8 +141,6 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
             @Override
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-             //   invalidateOptionsMenu();
-
             }
 
 
@@ -160,9 +151,8 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
 
             @Override
             public void onDrawerOpened(View view) {
-                super.onDrawerOpened(view);
+               super.onDrawerOpened(view);
                view.bringToFront();
-                //invalidateOptionsMenu();
             }
 
 
@@ -170,12 +160,6 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
 
         toggle.syncState();
         menuDrawer.setDrawerListener(toggle);
-
-
-
-
-
-
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setOnClickListener(new View.OnClickListener()
@@ -185,20 +169,29 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
 
             }
         });
+
        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
            @Override
            public boolean onNavigationItemSelected(MenuItem item) {
+
+               if(item.getTitle().equals("Search"))
+               {
+                   while(getSupportFragmentManager().getBackStackEntryCount() > 1)
+                       getSupportFragmentManager().popBackStackImmediate();
+
+                   toolbar.setTitle(getResources().getString(R.string.app_name));
+                   menuDrawer.closeDrawers();
+                   return false;
+               }
+
+           if(item.getTitle().equals("Favorites")) {
+               Toast.makeText(SearchActivity.this,"Coming soon!",Toast.LENGTH_SHORT).show();
+           }
                if(item.getTitle().equals("Search History")) {
 
-                   Fragment fragment = getSupportFragmentManager().findFragmentByTag("searchHistoryFragment");
-                   if(fragment != null)
-                       getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-                   fragment = getSupportFragmentManager().findFragmentByTag("resultsFragment");
-                   if(fragment != null)
-                       getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-                   fragment = getSupportFragmentManager().findFragmentByTag("recipeFragment");
-                   if(fragment != null)
-                       getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                   while(getSupportFragmentManager().getBackStackEntryCount() > 1)
+                       getSupportFragmentManager().popBackStackImmediate();
+
 
                    searchHistoryFragment = SearchHistoryFragment.newInstance(searchHistoryModels);
                    getSupportFragmentManager().beginTransaction()
@@ -208,18 +201,18 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
                    toolbar.setTitle("Search History");
                    menuDrawer.closeDrawers();
 
+
                    searchHistoryFragment.setOnFragmentEvent(new SearchHistoryFragment.OnFragmentEvent()
                    {
-
-
 
                        @Override
                        public void onEvent(ComplexSearchResultsModel results)
                        {
                            resultsFragment = ResultsFragment.newInstance(results);
-
+                           Toast.makeText(SearchActivity.this,"Searching...",Toast.LENGTH_SHORT).show();
 
                            resultsFragment.setOnFragmentEvent(new ResultsFragment.OnFragmentEvent() {
+
 
                                @Override
                                public void onEvent(ComplexRecipeItemModel recipe) {
@@ -246,30 +239,34 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
                                    .addToBackStack(RecipeFragment.class.getSimpleName())
                                    .commit();
                        }
-
-
-
                    });
-
                    return true;
                }
                return false;
            }
-       });
+           });
 
-//         Navigation button for results
-//        onNavigationItemSelected();
-
-    }
-
+}
 
     @Override
     public void onBackPressed() {
 
 
+        if(menuDrawer.isDrawerOpen(Gravity.LEFT)) {
+            menuDrawer.closeDrawers();
+            return;
+        }
         if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
             finish(); // exit the program, dont delete our first fragment
         } else {
+            String temp = getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount()-2).getName();
+
+            if(temp.equals("SearchFragment"))
+                toolbar.setTitle(getResources().getString(R.string.app_name));
+            else if(temp.equals("RecipeFragment"))
+                toolbar.setTitle(getResources().getString(R.string.search_results_page_title));
+            else if(temp.equals("SearchHistoryFragment"))
+                toolbar.setTitle(getResources().getString(R.string.search_history_page_title));
 
             super.onBackPressed();
         }
@@ -283,30 +280,12 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
-        //if(menuDrawer.onOptionsItemSelected(menuItem))
-        //  return true;
         return false;
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        Toast.makeText(getBaseContext(), "Selected a navigation item", Toast.LENGTH_LONG).show();
-
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_inventory) {
-            // Recipe Types
-            Log.d(TAG, "inventory was clicked");
-        } else if (id == R.id.nav_history) {
-            Log.d(TAG, "History was clicked");
-        } else if (id == R.id.nav_results) {
-            Log.d(TAG, "GOT IN HERE - trying to go to the results page");
-        }
-
-
-        //   menuDrawer.closeDrawer(GravityCompat.START);
         return true;
     }
 

@@ -4,15 +4,15 @@ package com.recipeapp.plip.plipapp.model;
  * Created by SugarPalaces on 4/19/16.
  */
 public class FavoriteRecipeModel {
-    //private Integer id;
-    private String recipe_name;
-    private String notes;
 
-    public String getRecipe_name() {
-        return recipe_name;
+    private String title;
+    private String id;
+
+    public String getTitle() {
+        return title;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getId() {
+        return id;
     }
 }

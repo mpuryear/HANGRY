@@ -35,5 +35,10 @@ public interface RecipeApiAdapter {
     Observable<RecipeInformationModel> getRecipeInformationResults(
         @Path("id") int id);
 
+    @Headers("X-Mashape-Key: 9WLvQTpY6pmshsB2bkvHaMWU6MaJp1ROaugjsnPbkqB5D8i082")
+    @GET("recipes/{id}/information")
+    Observable<ComplexSearchResultsModel> getComplexFromRecipeInformationResults(
+            @Path("id") int id);
+
 
 }

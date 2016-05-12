@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.recipeapp.plip.plipapp.AppDefines;
 import com.recipeapp.plip.plipapp.R;
@@ -133,6 +134,7 @@ public class SearchFragment extends Fragment {
             public void onClick(View v) {
 
 
+                Toast.makeText(getContext(),"Searching...",Toast.LENGTH_SHORT).show();
                 closeKeyboard(getActivity(), searchText.getWindowToken());
 
                 // Store our string and generate an IngredientModel out of it.

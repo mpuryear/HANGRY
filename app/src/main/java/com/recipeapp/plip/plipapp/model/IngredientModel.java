@@ -1,7 +1,7 @@
 package com.recipeapp.plip.plipapp.model;
 
 /**
- * Created by tando on 4/25/2016.
+ * Created by Mathew on 4/25/2016.
  */
 public class IngredientModel {
     public String getName() {
