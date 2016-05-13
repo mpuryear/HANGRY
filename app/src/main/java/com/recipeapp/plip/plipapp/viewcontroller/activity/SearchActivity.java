@@ -174,7 +174,7 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
            @Override
            public boolean onNavigationItemSelected(MenuItem item) {
 
-               if(item.getTitle().equals("Search"))
+               if(item.getTitle().equals("Home"))
                {
                    while(getSupportFragmentManager().getBackStackEntryCount() > 1)
                        getSupportFragmentManager().popBackStackImmediate();
@@ -184,9 +184,9 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
                    return false;
                }
 
-           if(item.getTitle().equals("Favorites")) {
-               Toast.makeText(SearchActivity.this,"Coming soon!",Toast.LENGTH_SHORT).show();
-           }
+               if(item.getTitle().equals("Favorite Recipes")) {
+                  Toast.makeText(SearchActivity.this,"Coming soon!",Toast.LENGTH_SHORT).show();
+               }
                if(item.getTitle().equals("Search History")) {
 
                    while(getSupportFragmentManager().getBackStackEntryCount() > 1)

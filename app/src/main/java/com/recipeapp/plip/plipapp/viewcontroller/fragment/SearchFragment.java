@@ -133,7 +133,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-
+                concatenatedSearchParam = "";
                 Toast.makeText(getContext(),"Searching...",Toast.LENGTH_SHORT).show();
                 closeKeyboard(getActivity(), searchText.getWindowToken());
 
