@@ -8,4 +8,5 @@ public class AppDefines {
     public static final Integer NUMBER_OF_ALLERGENS = 11;
     public static final long DRAWER_CLOSE_DELAY_MS = 250;
     public static final String NAV_ITEM_ID = "navItemId";
+    public static final Integer SPLASHSCREEN_TIMER_MS = 1250;
 }

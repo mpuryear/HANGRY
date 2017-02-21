@@ -2,7 +2,6 @@ package com.recipeapp.plip.plipapp.viewcontroller.activity;
 
 import android.support.design.widget.NavigationView;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 
@@ -17,24 +16,16 @@ import android.widget.ListView;
 
 import android.widget.Toast;
 
-import com.recipeapp.plip.plipapp.AppDefines;
 import com.recipeapp.plip.plipapp.R;
 import com.recipeapp.plip.plipapp.model.ComplexRecipeItemModel;
 import com.recipeapp.plip.plipapp.model.ComplexSearchResultsModel;
-import com.recipeapp.plip.plipapp.model.FavoriteRecipeModel;
 import com.recipeapp.plip.plipapp.model.SearchHistoryModel;
-import com.recipeapp.plip.plipapp.service.api.ApiClient;
-import com.recipeapp.plip.plipapp.viewcontroller.fragment.FavoritesFragment;
 import com.recipeapp.plip.plipapp.viewcontroller.fragment.RecipeFragment;
 import com.recipeapp.plip.plipapp.viewcontroller.fragment.ResultsFragment;
 import com.recipeapp.plip.plipapp.viewcontroller.fragment.SearchFragment;
 import com.recipeapp.plip.plipapp.viewcontroller.fragment.SearchHistoryFragment;
 
 import java.util.ArrayList;
-
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * An Activity controlling the Search feature
@@ -45,7 +36,6 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
     private SearchFragment searchFragment;
     private RecipeFragment recipeFragment;
     private ResultsFragment resultsFragment;
-    private FavoritesFragment favoritesFragment;
     private SearchHistoryFragment searchHistoryFragment;
     private ActionBarDrawerToggle toggle;
     private DrawerLayout menuDrawer;
@@ -53,7 +43,6 @@ public class SearchActivity extends FragmentActivity implements NavigationView.O
     private NavigationView navigationView;
     private ArrayList<SearchHistoryModel> searchHistoryModels;
     private SearchHistoryModel searchHistoryModel;
-    private FavoriteRecipeModel favoriteRecipeModel;
     private Toolbar toolbar;
 
     // ToDO: count as the user scrolls to the bottom of the recycler view and repopulate

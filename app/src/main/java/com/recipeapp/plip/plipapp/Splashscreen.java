@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import com.recipeapp.plip.plipapp.viewcontroller.activity.SearchActivity;
 
+import static com.recipeapp.plip.plipapp.AppDefines.SPLASHSCREEN_TIMER_MS;
+
 /**
  * Created by SugarPalaces on 4/20/16.
  */
@@ -19,7 +21,8 @@ public class Splashscreen extends Activity {
         Thread timerThread = new Thread(){
             public void run(){
                 try{
-                    sleep(3000);
+                    // Forced time on splash screen in MS
+                    sleep(SPLASHSCREEN_TIMER_MS);
                 }catch(InterruptedException e){
                     e.printStackTrace();
                 }finally{
